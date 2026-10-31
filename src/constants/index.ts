@@ -83,7 +83,7 @@ export const GEMINI_MODEL_ID = 'gemini-2.0-flash';
  * Session storage key for persisting the Gemini API key (never written to localStorage or disk).
  * @constant {string}
  */
-export const SESSION_KEY_API = 'auraplan_gemini_api_key';
+export const SESSION_KEY_API = 'eventcraft_gemini_api_key';
 
 /**
  * Maximum timeout in milliseconds for AI generation requests.
@@ -123,7 +123,8 @@ export const MAX_BUFFER_MINUTES = 30;
  * Application display name.
  * @constant {string}
  */
-export const APP_NAME = 'AuraPlan AI';
+export const APP_NAME = 'EventCraft AI';
+export const APP_FULL_TITLE = 'EventCraft AI — Autonomous Celebration & Event Architect';
 
 /**
  * Application version string.
@@ -135,7 +136,7 @@ export const APP_VERSION = '2.0.0';
  * Logger prefix used by the structured application logger.
  * @constant {string}
  */
-export const LOGGER_PREFIX = '[AuraPlan]';
+export const LOGGER_PREFIX = '[EventCraft]';
 
 /* ────────────────────────── RSVP Status Cycle ────────────────────────── */
 

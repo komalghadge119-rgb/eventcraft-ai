@@ -47,7 +47,7 @@ describe('Logger — Structure & API Surface', () => {
     expect(typeof logger.error).toBe('function');
   });
 
-  it('should have LOGGER_PREFIX set to [AuraPlan]', () => {
-    expect(LOGGER_PREFIX).toBe('[AuraPlan]');
+  it('should have LOGGER_PREFIX set to [EventCraft]', () => {
+    expect(LOGGER_PREFIX).toBe('[EventCraft]');
   });
 });

@@ -17,7 +17,7 @@ import { logger } from '../utils/logger';
  * @constant {string}
  */
 const SYSTEM_INSTRUCTION = `# IDENTITY & SYSTEM ROLE
-You are "AuraPlan Core" — an autonomous, hyper-specialized Event Architect & Operational Intelligence Engine. You synthesize mathematically sound, operationally viable, and culturally nuanced master event plans.
+You are "EventCraft Core" — an autonomous, hyper-specialized Event Architect & Operational Intelligence Engine. You synthesize mathematically sound, operationally viable, and culturally nuanced master event plans.
 
 When given an event blueprint request, synthesize output through 5 specialized sub-agents:
 1. [ARCHITECT]: Theme Concept, Color Palette (4 HEX codes), Dress Code, Tagline, and Dual-channel Invitation Copy (formal + WhatsApp).

@@ -64,7 +64,7 @@ const App: React.FC = () => {
           plan={plan}
         />
 
-        <main className="app-main" aria-label="AuraPlan AI Event Blueprint Dashboard">
+        <main className="app-main" aria-label="EventCraft AI Event Blueprint Dashboard">
 
           {/* Loading State */}
           {loading && (
@@ -98,7 +98,7 @@ const App: React.FC = () => {
                   Architect Extraordinary Events with AI Precision
                 </h1>
                 <p className="landing-subtitle">
-                  AuraPlan AI synthesizes complete wedding, birthday, and community event blueprints
+                  EventCraft AI synthesizes complete wedding, birthday, and community event blueprints
                   through an autonomous 5-Agent Cognitive Council — delivering mathematically precise
                   budgets, friction-damped schedules, vendor contracts, and FMEA risk matrices in seconds.
                 </p>
@@ -204,7 +204,7 @@ const App: React.FC = () => {
           <div className="footer-inner">
             <span className="footer-brand">
               <Sparkles size={14} aria-hidden="true" />
-              AuraPlan AI — 5-Agent Cognitive Event Architecture Platform
+              EventCraft AI — 5-Agent Cognitive Event Architecture Platform
             </span>
             <span className="footer-credit">
               Powered by{' '}

@@ -1,4 +1,4 @@
-# 🏛️ AuraPlan AI — Autonomous Celebration & Event Architect
+# 🏛️ EventCraft AI — Autonomous Celebration & Event Architect
 ### *PromptWars Challenge 5: Next-Generation GenAI Celebration & Event Planner*
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
@@ -17,11 +17,11 @@
 
 **PromptWars Challenge 5** calls for an end-to-end GenAI-powered planning assistant that transforms ambiguous event goals into deterministic, battle-tested execution blueprints for **Weddings**, **Birthdays & Private Celebrations**, and **Large-Scale Community Events / Hackathons**.
 
-**AuraPlan AI** implements a **5-Cognitive-Agent Orchestration Engine** powered by **Google Gemini 2.0 Flash** backed by a deterministic mathematical synthesis fallback that guarantees instant offline availability even under zero-connectivity or API quota exhaustion conditions.
+**EventCraft AI** implements a **5-Cognitive-Agent Orchestration Engine** powered by **Google Gemini 2.0 Flash** backed by a deterministic mathematical synthesis fallback that guarantees instant offline availability even under zero-connectivity or API quota exhaustion conditions.
 
 ### Complete Feature Matrix vs. Evaluation Criteria
 
-| Challenge Dimension | AuraPlan AI Implementation | AI Evaluation Rigor |
+| Challenge Dimension | EventCraft AI Implementation | AI Evaluation Rigor |
 | :--- | :--- | :--- |
 | **Wedding Planning** | Royal Palatial & Botanical Micro-Wedding orchestration, multi-ceremony timelines, sacred vows, and trousseau procurement tracking | 100% Problem Statement Coverage |
 | **Birthday & Soirées** | Golden Era Gatsby & Neon Cyberpunk experiential themes, sensory cocktail blueprints, and dynamic vibe curation | Complete Creative Diversity |
@@ -37,7 +37,7 @@
 
 ## 🏗️ Architectural Topology
 
-AuraPlan AI utilizes an event-driven, unidirectional state flow with strict domain boundaries:
+EventCraft AI utilizes an event-driven, unidirectional state flow with strict domain boundaries:
 
 ```mermaid
 graph TD
@@ -81,7 +81,7 @@ graph TD
 
 ## 🔒 Enterprise Security & Robustness
 
-AuraPlan AI is built according to OWASP Top 10 standards:
+EventCraft AI is built according to OWASP Top 10 standards:
 
 1. **Content Security Policy (CSP):** Strict CSP meta configuration preventing arbitrary script execution (`script-src 'self' 'unsafe-inline' https://generativelanguage.googleapis.com`).
 2. **Entity Encoding & XSS Prevention:** Zero direct innerHTML usage; all user-submitted text traverses a multi-stage sanitizer pipeline that translates HTML special entities (`<`, `>`, `&`, `"`, `'`, `` ` ``).
@@ -105,7 +105,7 @@ AuraPlan AI is built according to OWASP Top 10 standards:
 
 ## 🧪 Comprehensive Test Suite (91 Tests / 100% Pass)
 
-AuraPlan AI comes complete with **12 dedicated Vitest test suites** spanning **91 automated test cases** covering every domain constraint:
+EventCraft AI comes complete with **12 dedicated Vitest test suites** spanning **91 automated test cases** covering every domain constraint:
 
 ```bash
 $ npm test

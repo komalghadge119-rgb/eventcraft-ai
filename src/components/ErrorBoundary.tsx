@@ -78,7 +78,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <div className="error-boundary-icon">⚠️</div>
             <h2 className="error-boundary-title">Something went wrong</h2>
             <p className="error-boundary-message">
-              AuraPlan encountered an unexpected rendering issue.
+              EventCraft encountered an unexpected rendering issue.
               Your data is safe. Click below to re-initialize the session.
             </p>
             <button

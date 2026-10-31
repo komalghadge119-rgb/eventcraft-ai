@@ -14,7 +14,7 @@ import type { EventPlan, TimelineItem } from '../types/event';
 export function generateIcsUid(): string {
   const timestamp = Date.now().toString(36);
   const random = Math.random().toString(36).substring(2, 10);
-  return `${timestamp}-${random}@auraplan.ai`;
+  return `${timestamp}-${random}@eventcraft.ai`;
 }
 
 /**
@@ -63,7 +63,7 @@ export function generateIcsContent(plan: EventPlan): string {
   const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//AuraPlan AI//Event Architect//EN',
+    'PRODID:-//EventCraft AI//Event Architect//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     `X-WR-CALNAME:${escapeIcsText(plan.eventSummary.title)}`,
@@ -115,7 +115,7 @@ export function downloadIcsFile(plan: EventPlan): void {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
-  anchor.download = `${plan.eventSummary.title.replace(/\s+/g, '_')}_AuraPlan.ics`;
+  anchor.download = `${plan.eventSummary.title.replace(/\s+/g, '_')}_EventCraft.ics`;
   document.body.appendChild(anchor);
   anchor.click();
   document.body.removeChild(anchor);

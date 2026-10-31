@@ -1,5 +1,5 @@
 /**
- * @fileoverview Main application component for AuraPlan AI.
+ * @fileoverview Main application component for EventCraft AI.
  * Orchestrates the luxury event planning experience with lazy-loaded sections,
  * React Suspense skeletons, and a full landing hero for empty state.
  */

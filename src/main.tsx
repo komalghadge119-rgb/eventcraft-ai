@@ -1,5 +1,5 @@
 /**
- * @fileoverview Application entry point for AuraPlan AI.
+ * @fileoverview Application entry point for EventCraft AI.
  * Mounts the React 18 application with StrictMode for development quality assurance.
  */
 

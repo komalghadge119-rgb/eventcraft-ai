@@ -1,5 +1,5 @@
 /**
- * @fileoverview Timeline section component for AuraPlan AI.
+ * @fileoverview Timeline section component for EventCraft AI.
  * Displays the ChronoPlanner run-of-show schedule with phase badges,
  * transition buffer callouts, and interactive milestone checkboxes.
  */

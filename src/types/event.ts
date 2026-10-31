@@ -1,5 +1,5 @@
 /**
- * @fileoverview Domain type definitions for the AuraPlan AI Event Architecture Platform.
+ * @fileoverview Domain type definitions for the EventCraft AI Event Architecture Platform.
  * All interfaces are fully documented with JSDoc for maximum code quality scoring.
  * These contracts enforce strict typing across all 5 cognitive agents and UI components.
  */

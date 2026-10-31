@@ -1,5 +1,5 @@
 /**
- * @fileoverview Top navigation bar component for AuraPlan AI.
+ * @fileoverview Top navigation bar component for EventCraft AI.
  * Includes brand lockup, 1-click evaluator presets, API key modal,
  * blueprint synthesis trigger, and export suite (ICS, PDF, Markdown).
  */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Guest tracker section component for AuraPlan AI.
+ * @fileoverview Guest tracker section component for EventCraft AI.
  * Displays the Guest & RSVP Operations Matrix with KPI counters,
  * dietary triage alerts, interactive status cycling, and quick-add form.
  */

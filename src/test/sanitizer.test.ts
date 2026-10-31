@@ -1,5 +1,5 @@
 /**
- * @fileoverview Input sanitizer tests for AuraPlan AI.
+ * @fileoverview Input sanitizer tests for EventCraft AI.
  * Validates HTML tag stripping, entity encoding, length caps,
  * and prototype-pollution rejection across all sanitizer functions.
  */

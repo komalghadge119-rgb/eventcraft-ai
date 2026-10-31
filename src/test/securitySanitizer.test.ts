@@ -1,5 +1,5 @@
 /**
- * @fileoverview Security sanitizer deep-object traversal tests for AuraPlan AI.
+ * @fileoverview Security sanitizer deep-object traversal tests for EventCraft AI.
  * Validates deep sanitization of nested objects with mixed types.
  */
 

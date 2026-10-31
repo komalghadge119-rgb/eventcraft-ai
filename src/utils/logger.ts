@@ -1,5 +1,5 @@
 /**
- * @fileoverview Structured singleton logger for AuraPlan AI.
+ * @fileoverview Structured singleton logger for EventCraft AI.
  * Replaces all raw console.warn/error calls with prefixed, structured logging.
  * Automatically suppresses output during Vitest test execution to keep test output clean.
  */
@@ -27,7 +27,7 @@ function isTestEnvironment(): boolean {
  * ```typescript
  * import { logger } from './utils/logger';
  * logger.info('Plan synthesized', { planId: 'abc-123' });
- * // Output: [AuraPlan] [INFO] Plan synthesized { planId: 'abc-123' }
+ * // Output: [EventCraft] [INFO] Plan synthesized { planId: 'abc-123' }
  * ```
  */
 export const logger = {

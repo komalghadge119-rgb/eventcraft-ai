@@ -1,5 +1,5 @@
 /**
- * @fileoverview Deterministic fallback event plan synthesizer for AuraPlan AI.
+ * @fileoverview Deterministic fallback event plan synthesizer for EventCraft AI.
  * Produces mathematically precise event blueprints without requiring any API key.
  * Used as an offline fallback when Gemini API is unavailable or rate-limited.
  */

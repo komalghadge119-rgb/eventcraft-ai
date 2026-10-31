@@ -1,5 +1,5 @@
 /**
- * @fileoverview useEventPlan hook tests for AuraPlan AI.
+ * @fileoverview useEventPlan hook tests for EventCraft AI.
  * Validates preset switching, state updates, and deterministic synthesizer behavior.
  */
 

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Pipeline integration tests for AuraPlan AI.
+ * @fileoverview Pipeline integration tests for EventCraft AI.
  * End-to-end tests verifying raw untrusted input sanitization through master plan
  * synthesis, and asserting that all barrel exports resolve cleanly.
  */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Plan synthesis modal component for AuraPlan AI.
+ * @fileoverview Plan synthesis modal component for EventCraft AI.
  * Provides a form dialog for creating new event blueprints with
  * full input validation and Escape-key dismissal.
  */

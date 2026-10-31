@@ -1,5 +1,5 @@
 /**
- * @fileoverview Export utilities tests for AuraPlan AI.
+ * @fileoverview Export utilities tests for EventCraft AI.
  * Validates RFC 5545 ICS formatting, UID uniqueness, CRLF escaping,
  * and Markdown dossier generation.
  */

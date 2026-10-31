@@ -1,5 +1,5 @@
 /**
- * @fileoverview Hero event banner component for AuraPlan AI.
+ * @fileoverview Hero event banner component for EventCraft AI.
  * Displays event title, tagline, metadata pills, live countdown timer,
  * and architectural color palette with 1-click copy functionality.
  */

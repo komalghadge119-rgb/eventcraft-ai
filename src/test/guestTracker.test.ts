@@ -1,5 +1,5 @@
 /**
- * @fileoverview Guest tracker tests for AuraPlan AI.
+ * @fileoverview Guest tracker tests for EventCraft AI.
  * Validates attendee headcount arithmetic with plus-ones,
  * deterministic RSVP state transitions, and dietary alert identification.
  */

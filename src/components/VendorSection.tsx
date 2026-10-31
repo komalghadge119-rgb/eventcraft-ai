@@ -1,5 +1,5 @@
 /**
- * @fileoverview Vendor procurement section component for AuraPlan AI.
+ * @fileoverview Vendor procurement section component for EventCraft AI.
  * Displays the vendor checklist with SLA clauses, priority badges,
  * deadline tracking, and an interactive completion progress gauge.
  */

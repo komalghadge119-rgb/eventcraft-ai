@@ -1,5 +1,5 @@
 /**
- * @fileoverview Risk Sentinel FMEA section component for AuraPlan AI.
+ * @fileoverview Risk Sentinel FMEA section component for EventCraft AI.
  * Displays the SENTINEL agent's Failure Mode & Effects Analysis grid
  * with probability/impact ratings, trigger conditions, and Plan B protocols.
  */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview AI service tests for AuraPlan AI.
+ * @fileoverview AI service tests for EventCraft AI.
  * Validates cleanJsonString parser, schema adherence, and prompt injection handling.
  */
 

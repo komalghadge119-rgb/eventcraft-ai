@@ -1,5 +1,5 @@
 /**
- * @fileoverview Constants validation tests for AuraPlan AI.
+ * @fileoverview Constants validation tests for EventCraft AI.
  * Validates that budget share sum equals 1.0, contingency bounds are correct,
  * and preset key uniqueness is guaranteed.
  */

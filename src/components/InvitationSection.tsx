@@ -1,5 +1,5 @@
 /**
- * @fileoverview Invitation studio section component for AuraPlan AI.
+ * @fileoverview Invitation studio section component for EventCraft AI.
  * Displays dual-channel invitation copy with 1-click copy buttons
  * and celebratory confetti bursts on successful copy.
  */

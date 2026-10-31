@@ -1,5 +1,5 @@
 /**
- * @fileoverview Export utilities for AuraPlan AI.
+ * @fileoverview Export utilities for EventCraft AI.
  * Provides RFC 5545 compliant .ics calendar export, PDF print view,
  * and Markdown executive dossier generation with CRLF injection defense.
  */

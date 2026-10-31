@@ -1,5 +1,5 @@
 /**
- * @fileoverview Vitest configuration for AuraPlan AI.
+ * @fileoverview Vitest configuration for EventCraft AI.
  * Configures jsdom environment for browser API simulation and
  * enables VITEST=true environment variable for logger suppression.
  */

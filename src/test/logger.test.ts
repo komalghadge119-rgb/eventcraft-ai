@@ -1,5 +1,5 @@
 /**
- * @fileoverview Logger utility tests for AuraPlan AI.
+ * @fileoverview Logger utility tests for EventCraft AI.
  * Validates method delegations (debug/info/warn/error), prefix formatting,
  * and Vitest silent-mode suppression.
  */

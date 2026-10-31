@@ -1,5 +1,5 @@
 /**
- * @fileoverview Custom React hook for managing event plan state in AuraPlan AI.
+ * @fileoverview Custom React hook for managing event plan state in EventCraft AI.
  * Handles plan creation, preset switching, guest management, and state transitions.
  */
 

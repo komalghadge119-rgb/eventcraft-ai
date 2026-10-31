@@ -1,5 +1,5 @@
 /**
- * @fileoverview Enterprise Error Boundary component for AuraPlan AI.
+ * @fileoverview Enterprise Error Boundary component for EventCraft AI.
  * Catches React rendering anomalies with a failover UI.
  * Zero raw stack trace disclosure in the DOM for security compliance.
  */

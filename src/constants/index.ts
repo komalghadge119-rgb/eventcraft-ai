@@ -1,5 +1,5 @@
 /**
- * @fileoverview Centralized constants for the AuraPlan AI platform.
+ * @fileoverview Centralized constants for the EventCraft AI platform.
  * Eliminates all magic numbers and string literals from the codebase.
  * All budget shares, model identifiers, session keys, timeouts, and preset
  * configurations are declared here as immutable constants.

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Edge case tests for AuraPlan AI.
+ * @fileoverview Edge case tests for EventCraft AI.
  * Tests zero budget, mega budget, minimum guest counts, and missing event dates.
  */
 

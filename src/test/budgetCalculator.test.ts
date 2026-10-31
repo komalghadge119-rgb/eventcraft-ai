@@ -1,5 +1,5 @@
 /**
- * @fileoverview Budget calculator tests for AuraPlan AI.
+ * @fileoverview Budget calculator tests for EventCraft AI.
  * Validates 5-pillar allocation math, 12% contingency calculation,
  * and mathematical coherence invariants.
  */

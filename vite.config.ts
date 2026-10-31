@@ -1,5 +1,5 @@
 /**
- * @fileoverview Vite build configuration for AuraPlan AI.
+ * @fileoverview Vite build configuration for EventCraft AI.
  * Implements Rollup manual chunking for sub-second initial paint via
  * vendor bundle splitting (vendor-react, vendor-icons, vendor-fx).
  */

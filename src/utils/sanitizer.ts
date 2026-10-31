@@ -1,5 +1,5 @@
 /**
- * @fileoverview Security-focused input sanitizer for AuraPlan AI.
+ * @fileoverview Security-focused input sanitizer for EventCraft AI.
  * Provides XSS protection, entity encoding, length truncation, and
  * prototype-pollution guard functions for all user-facing input fields.
  */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Google Gemini 2.0 Flash AI service for AuraPlan AI.
+ * @fileoverview Google Gemini 2.0 Flash AI service for EventCraft AI.
  * Uses the official @google/genai TypeScript SDK with schema-enforced JSON output.
  * Includes comprehensive system prompt for the 5-Agent Cognitive Council architecture.
  */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Budget allocation section component for AuraPlan AI.
+ * @fileoverview Budget allocation section component for EventCraft AI.
  * Displays the 5-pillar financial matrix with progress bars,
  * variance tracking, and the 12% dynamic contingency reserve tile.
  */

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Risk SENTINEL FMEA tests for AuraPlan AI.
+ * @fileoverview Risk SENTINEL FMEA tests for EventCraft AI.
  * Validates risk structure, probability/impact schemas, and Plan B trigger conditions.
  */
 

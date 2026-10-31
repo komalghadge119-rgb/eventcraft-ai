@@ -18,6 +18,7 @@ const BudgetSection = lazy(() => import('./components/BudgetSection').then((m) =
 const TimelineSection = lazy(() => import('./components/TimelineSection').then((m) => ({ default: m.TimelineSection })));
 const VendorSection = lazy(() => import('./components/VendorSection').then((m) => ({ default: m.VendorSection })));
 const InvitationSection = lazy(() => import('./components/InvitationSection').then((m) => ({ default: m.InvitationSection })));
+const PersonalizedIdeasSection = lazy(() => import('./components/PersonalizedIdeasSection').then((m) => ({ default: m.PersonalizedIdeasSection })));
 const GuestTrackerSection = lazy(() => import('./components/GuestTrackerSection').then((m) => ({ default: m.GuestTrackerSection })));
 const RiskSentinelSection = lazy(() => import('./components/RiskSentinelSection').then((m) => ({ default: m.RiskSentinelSection })));
 
@@ -51,12 +52,16 @@ const App: React.FC = () => {
     loadPreset,
     toggleTimelineItem,
     toggleVendorTask,
+    toggleIdeaFavorite,
     cycleGuestRsvp,
     addGuest,
   } = useEventPlan();
 
   return (
     <ErrorBoundary>
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
       <div className="app-shell">
         <Navbar
           onLoadPreset={loadPreset}
@@ -64,7 +69,7 @@ const App: React.FC = () => {
           plan={plan}
         />
 
-        <main className="app-main" aria-label="EventCraft AI Event Blueprint Dashboard">
+        <main id="main-content" className="app-main" aria-label="EventCraft AI Event Blueprint Dashboard">
 
           {/* Loading State */}
           {loading && (
@@ -181,6 +186,15 @@ const App: React.FC = () => {
                 <Suspense fallback={<SectionSkeleton />}>
                   <InvitationSection invitation={plan.invitationStudio} />
                 </Suspense>
+
+                {plan.personalizedIdeas && plan.personalizedIdeas.length > 0 && (
+                  <Suspense fallback={<SectionSkeleton />}>
+                    <PersonalizedIdeasSection
+                      ideas={plan.personalizedIdeas}
+                      onToggleFavorite={toggleIdeaFavorite}
+                    />
+                  </Suspense>
+                )}
 
                 {plan.guestList && plan.guestList.length > 0 && (
                   <Suspense fallback={<SectionSkeleton />}>

@@ -216,6 +216,7 @@ export const GuestTrackerSection: React.FC<GuestTrackerSectionProps> = ({ guests
       <div className="guest-add-section">
         {showAddForm ? (
           <div className="guest-add-form">
+            <label htmlFor="new-guest-name" className="sr-only">Guest Name</label>
             <input
               type="text"
               className="form-input"
@@ -225,6 +226,7 @@ export const GuestTrackerSection: React.FC<GuestTrackerSectionProps> = ({ guests
               aria-label="New guest name"
               id="new-guest-name"
             />
+            <label htmlFor="new-guest-category" className="sr-only">Guest Category</label>
             <select
               className="form-select"
               value={newGuest.category}
@@ -237,6 +239,7 @@ export const GuestTrackerSection: React.FC<GuestTrackerSectionProps> = ({ guests
               <option value="General">General</option>
               <option value="Crew">Crew</option>
             </select>
+            <label htmlFor="new-guest-dietary" className="sr-only">Dietary Needs</label>
             <input
               type="text"
               className="form-input"
@@ -246,6 +249,7 @@ export const GuestTrackerSection: React.FC<GuestTrackerSectionProps> = ({ guests
               aria-label="Dietary requirements"
               id="new-guest-dietary"
             />
+            <label htmlFor="new-guest-plusones" className="sr-only">Plus-Ones Count</label>
             <input
               type="number"
               className="form-input form-input-small"

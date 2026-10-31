@@ -7,7 +7,7 @@
 import { GoogleGenAI } from '@google/genai';
 import type { EventInput, EventPlan } from '../types/event';
 import { GEMINI_MODEL_ID, SESSION_KEY_API } from '../constants';
-import { synthesizeFallbackPlan } from './fallbackSynthesizer';
+import { synthesizeFallbackPlan, generatePersonalizedIdeas } from './fallbackSynthesizer';
 import { logger } from '../utils/logger';
 
 /**
@@ -66,6 +66,9 @@ Output raw JSON adhering strictly to this schema:
     "casualWhatsAppCopy": "string (emoji-rich casual WhatsApp message)",
     "rsvpCallToAction": "string"
   },
+  "personalizedIdeas": [
+    { "id": "idea-1", "title": "string", "category": "Decor & Ambiance|Culinary & Mixology|Interactive Entertainment|Attendee Keepsakes|Experiential Moments", "description": "string", "impactTag": "High Visual Impact|Emotional Resonance|Viral & Social|Signature Experience", "estimatedBudgetImpact": "string", "isFavorited": false }
+  ],
   "riskContingencyMatrix": [
     { "risk": "string", "probability": "Low|Med|High", "impact": "Low|Med|High|Critical", "contingencyPlan": "string", "triggerCondition": "string (measurable condition)" }
   ]
@@ -193,6 +196,9 @@ export async function generateEventPlan(input: EventInput): Promise<EventPlan> {
       timelineItinerary: parsed.timelineItinerary,
       vendorChecklist: parsed.vendorChecklist,
       invitationStudio: parsed.invitationStudio,
+      personalizedIdeas: Array.isArray(parsed.personalizedIdeas) && parsed.personalizedIdeas.length > 0
+        ? parsed.personalizedIdeas
+        : generatePersonalizedIdeas(input.eventType),
       riskContingencyMatrix: parsed.riskContingencyMatrix,
       guestList: [],
     };

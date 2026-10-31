@@ -44,6 +44,8 @@ describe('useEventPlan / Fallback Synthesizer — Plan Structure', () => {
     expect(plan.timelineItinerary).toBeDefined();
     expect(plan.vendorChecklist).toBeDefined();
     expect(plan.invitationStudio).toBeDefined();
+    expect(plan.personalizedIdeas).toBeDefined();
+    expect(plan.personalizedIdeas.length).toBeGreaterThan(0);
     expect(plan.riskContingencyMatrix).toBeDefined();
   });
 

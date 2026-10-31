@@ -31,6 +31,7 @@ export interface UseEventPlanReturn {
   loadPreset: (presetKey: string) => void;
   toggleTimelineItem: (index: number) => void;
   toggleVendorTask: (id: string) => void;
+  toggleIdeaFavorite: (id: string) => void;
   cycleGuestRsvp: (id: string) => void;
   addGuest: (guest: GuestItem) => void;
   updateActualSpent: (spent: number, categoryIndex: number) => void;
@@ -165,6 +166,21 @@ export function useEventPlan(): UseEventPlanReturn {
     });
   }, []);
 
+  /**
+   * Toggles the favorited/shortlisted status of a personalized creative idea.
+   * @param {string} id - The personalized idea identifier.
+   */
+  const toggleIdeaFavorite = useCallback((id: string): void => {
+    setPlan((prev) => {
+      if (!prev || !prev.personalizedIdeas) return prev;
+      const updated = { ...prev };
+      updated.personalizedIdeas = prev.personalizedIdeas.map((idea) =>
+        idea.id === id ? { ...idea, isFavorited: !idea.isFavorited } : idea
+      );
+      return updated;
+    });
+  }, []);
+
   return {
     plan,
     loading,
@@ -173,6 +189,7 @@ export function useEventPlan(): UseEventPlanReturn {
     loadPreset,
     toggleTimelineItem,
     toggleVendorTask,
+    toggleIdeaFavorite,
     cycleGuestRsvp,
     addGuest,
     updateActualSpent,

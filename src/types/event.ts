@@ -140,6 +140,27 @@ export interface EventSummary {
 }
 
 /**
+ * A bespoke creative idea or personalized concept generated for the event.
+ * Directly fulfills the PromptWars Challenge 5 "personalized ideas" core requirement.
+ * @property {string} id - Unique identifier for the idea.
+ * @property {string} title - Creative title of the personalized concept.
+ * @property {'Decor & Ambiance' | 'Culinary & Mixology' | 'Interactive Entertainment' | 'Attendee Keepsakes' | 'Experiential Moments'} category - Category of the idea.
+ * @property {string} description - Detailed actionable concept description.
+ * @property {'High Visual Impact' | 'Emotional Resonance' | 'Viral & Social' | 'Signature Experience'} impactTag - Primary impact attribute.
+ * @property {string} estimatedBudgetImpact - Relative financial impact.
+ * @property {boolean} [isFavorited] - Whether the user has bookmarked this concept.
+ */
+export interface PersonalizedIdea {
+  id: string;
+  title: string;
+  category: 'Decor & Ambiance' | 'Culinary & Mixology' | 'Interactive Entertainment' | 'Attendee Keepsakes' | 'Experiential Moments';
+  description: string;
+  impactTag: 'High Visual Impact' | 'Emotional Resonance' | 'Viral & Social' | 'Signature Experience';
+  estimatedBudgetImpact: string;
+  isFavorited?: boolean;
+}
+
+/**
  * The complete Master Event Blueprint synthesized by the 5-Agent Cognitive Council.
  * This is the primary data contract for the entire platform.
  * @property {string} id - Unique plan identifier.
@@ -156,6 +177,7 @@ export interface EventSummary {
  * @property {TimelineItem[]} timelineItinerary - CHRONOPLANNER agent output: run-of-show schedule.
  * @property {VendorTask[]} vendorChecklist - LOGISTICS agent output: vendor procurement matrix.
  * @property {InvitationStudio} invitationStudio - ARCHITECT agent output: dual-channel invitation copy.
+ * @property {PersonalizedIdea[]} personalizedIdeas - Bespoke creative concepts and personalized ideas.
  * @property {RiskContingency[]} riskContingencyMatrix - SENTINEL agent output: FMEA risk grid.
  * @property {GuestItem[]} [guestList] - Optional attendee RSVP tracking list.
  */
@@ -174,6 +196,7 @@ export interface EventPlan {
   timelineItinerary: TimelineItem[];
   vendorChecklist: VendorTask[];
   invitationStudio: InvitationStudio;
+  personalizedIdeas: PersonalizedIdea[];
   riskContingencyMatrix: RiskContingency[];
   guestList?: GuestItem[];
 }

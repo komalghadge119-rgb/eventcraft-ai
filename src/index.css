@@ -1315,3 +1315,207 @@ body {
   .plan-section { break-inside: avoid; box-shadow: none !important; border: 1px solid #ddd; }
   .app-main { padding: 0; }
 }
+
+/* ────────────────── Screen Reader Only (WCAG 2.1 AAA) ────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ────────────────── Skip to Content (WCAG 2.1 AAA) ────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  background: #111827;
+  color: #fbbf24;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  z-index: 99999;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid #fbbf24;
+  outline: none;
+}
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* ────────────────── Personalized Ideas Section ────────────────── */
+.personalized-ideas-section {
+  position: relative;
+}
+
+.ideas-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ideas-filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ideas-filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.filter-pill.active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.15);
+}
+
+.ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.idea-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.idea-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.idea-card.favorited {
+  border-color: #f59e0b;
+  background: linear-gradient(to bottom, #fffdfa, #ffffff);
+}
+
+.idea-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.875rem;
+}
+
+.impact-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.impact-visual { background: rgba(59, 130, 246, 0.12); color: #1d4ed8; }
+.impact-signature { background: rgba(168, 85, 247, 0.12); color: #7e22ce; }
+.impact-viral { background: rgba(236, 72, 153, 0.12); color: #be185d; }
+.impact-emotional { background: rgba(245, 158, 11, 0.12); color: #b45309; }
+
+.idea-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.idea-fav-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.idea-fav-btn.active {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.idea-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+.idea-card-description {
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: #475569;
+  flex: 1;
+  margin: 0 0 1rem 0;
+}
+
+.idea-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.75rem;
+}
+
+.idea-category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.idea-cost-impact {
+  font-weight: 600;
+  color: #0f766e;
+}
+

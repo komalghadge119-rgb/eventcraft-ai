@@ -1,0 +1,17 @@
+{
+  "name": "EventCraft AI — Autonomous Celebration & Event Architect",
+  "short_name": "EventCraft AI",
+  "description": "GenAI-powered planning assistant for weddings, birthdays, and community events with budgets, timelines, vendor checklists, and personalized ideas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090A0F",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

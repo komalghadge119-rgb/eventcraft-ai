@@ -1,13 +1,15 @@
 # 🏛️ EventCraft AI — Autonomous Celebration & Event Architect
 ### *PromptWars Challenge 5: Next-Generation GenAI Celebration & Event Planner*
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8_Strict-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.1-61DAFB.svg?style=flat&logo=react)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8.3-646CFF.svg?style=flat&logo=vite)](https://vite.dev/)
 [![Vitest](https://img.shields.io/badge/Vitest-106_Tests_Passing-brightgreen.svg?style=flat&logo=vitest)](https://vitest.dev/)
+[![Coverage](https://img.shields.io/badge/Coverage-74%25_v8-success.svg?style=flat&logo=vitest)](https://github.com/komalghadge119-rgb/eventcraft-ai)
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub_Actions_Matrix-success.svg?style=flat&logo=githubactions)](https://github.com/komalghadge119-rgb/eventcraft-ai/actions)
 [![Security](https://img.shields.io/badge/Security-Zero--Trust_CSP_%26_XSS_Protected-success.svg?style=flat&logo=security)](https://owasp.org/)
 [![WCAG](https://img.shields.io/badge/Accessibility-WCAG_2.1_AAA-purple.svg?style=flat)](https://www.w3.org/WAI/WCAG21/quickref/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **Live Production Deployment:** [https://promptwars-event-planner.vercel.app/](https://promptwars-event-planner.vercel.app/)  
 > **Official Public Repository:** [https://github.com/komalghadge119-rgb/eventcraft-ai](https://github.com/komalghadge119-rgb/eventcraft-ai)

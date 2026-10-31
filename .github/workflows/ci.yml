@@ -34,6 +34,9 @@ jobs:
       - name: Execute Vitest Suite (100% Pass)
         run: npm test
 
+      - name: Automated Code Coverage Assertion
+        run: npm run test:coverage
+
       - name: Production Bundle Build Verification
         run: npm run build
 

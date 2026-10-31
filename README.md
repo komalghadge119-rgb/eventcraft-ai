@@ -9,7 +9,7 @@
 [![WCAG](https://img.shields.io/badge/Accessibility-WCAG_2.1_AAA-purple.svg?style=flat)](https://www.w3.org/WAI/WCAG21/quickref/)
 
 > **Live Deployment:** [https://promptwars-event-planner.vercel.app/](https://promptwars-event-planner.vercel.app/)  
-> **Repository:** [https://github.com/snehalghadge59-blip/industrial-data-dashboard](https://github.com/snehalghadge59-blip/industrial-data-dashboard)
+> **Repository:** [https://github.com/komalghadge119-rgb/eventcraft-ai](https://github.com/komalghadge119-rgb/eventcraft-ai)
 
 ---
 
@@ -156,8 +156,8 @@ $ npm test
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/snehalghadge59-blip/industrial-data-dashboard.git
-cd "kom promptwars"
+git clone https://github.com/komalghadge119-rgb/eventcraft-ai.git
+cd eventcraft-ai
 
 # 2. Install dependencies
 npm install --legacy-peer-deps

@@ -26,3 +26,5 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+generate_demo_video.py
+

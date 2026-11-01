@@ -4,7 +4,7 @@
  * with probability/impact ratings, trigger conditions, and Plan B protocols.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Shield, AlertTriangle } from 'lucide-react';
 import type { RiskContingency } from '../types/event';
 
@@ -53,7 +53,10 @@ function getImpactClass(impact: string): string {
  * @returns {React.ReactElement} The rendered risk sentinel section.
  */
 export const RiskSentinelSection: React.FC<RiskSentinelSectionProps> = ({ risks }) => {
-  const criticalRisks = risks.filter((r) => r.impact === 'Critical' || r.probability === 'High');
+  const criticalRisks = useMemo(
+    () => risks.filter((r) => r.impact === 'Critical' || r.probability === 'High'),
+    [risks],
+  );
 
   return (
     <section className="plan-section" aria-labelledby="risk-heading">

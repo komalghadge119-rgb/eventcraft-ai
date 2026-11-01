@@ -4,7 +4,7 @@
  * deadline tracking, and an interactive completion progress gauge.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ClipboardList, CheckSquare, Square, AlertTriangle } from 'lucide-react';
 import type { VendorTask } from '../types/event';
 
@@ -40,16 +40,22 @@ function getPriorityClass(priority: string): string {
  * @returns {React.ReactElement} The rendered vendor section.
  */
 export const VendorSection: React.FC<VendorSectionProps> = ({ vendors, onToggle }) => {
-  const completedCount = vendors.filter((v) => v.completed).length;
-  const progressPct = vendors.length > 0 ? Math.round((completedCount / vendors.length) * 100) : 0;
+  const completedCount = useMemo(() => vendors.filter((v) => v.completed).length, [vendors]);
+  const progressPct = useMemo(
+    () => (vendors.length > 0 ? Math.round((completedCount / vendors.length) * 100) : 0),
+    [vendors.length, completedCount],
+  );
 
-  /* Group vendors by category */
-  const grouped: Record<string, VendorTask[]> = {};
-  for (const vendor of vendors) {
-    const key = vendor.category;
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(vendor);
-  }
+  /* Group vendors by category with memoization */
+  const grouped = useMemo(() => {
+    const map: Record<string, VendorTask[]> = {};
+    for (const vendor of vendors) {
+      const key = vendor.category;
+      if (!map[key]) map[key] = [];
+      map[key].push(vendor);
+    }
+    return map;
+  }, [vendors]);
 
   return (
     <section className="plan-section" aria-labelledby="vendor-heading">

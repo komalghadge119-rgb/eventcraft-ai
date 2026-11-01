@@ -22,3 +22,4 @@ The project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - **RFC 5545 iCalendar Sync**: 1-click `.ics` calendar sync and Markdown executive dossier export.
 - **WCAG 2.1 AAA Accessibility**: High contrast, skip-link, keyboard operability, and ARIA live regions.
 - **Zero-Trust Security**: Multi-stage HTML sanitization and recursive prototype-pollution defense.
+

@@ -83,3 +83,4 @@ where:
 - Content Security Policy (CSP) blocking unauthorized external scripts.
 - Ephemeral sessionStorage for API keys; zero persistence to disk or localStorage.
 - Complete sanitization pipeline protecting against `__proto__` and `constructor` attacks.
+

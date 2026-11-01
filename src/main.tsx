@@ -1,6 +1,6 @@
 /**
  * @fileoverview Application entry point for EventCraft AI.
- * Mounts the React 18 application with StrictMode for development quality assurance.
+ * Mounts the React 19 application with StrictMode for development quality assurance.
  */
 
 import React from 'react';

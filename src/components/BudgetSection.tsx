@@ -4,7 +4,7 @@
  * variance tracking, and the 12% dynamic contingency reserve tile.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { DollarSign, Shield, TrendingUp } from 'lucide-react';
 import type { BudgetAllocation } from '../types/event';
 
@@ -36,8 +36,14 @@ function formatCurrency(amount: number, currency: string): string {
  * @returns {React.ReactElement} The rendered budget section.
  */
 export const BudgetSection: React.FC<BudgetSectionProps> = ({ budget }) => {
-  const totalAllocated = budget.categories.reduce((sum, c) => sum + c.allocated, 0);
-  const totalSpent = budget.categories.reduce((sum, c) => sum + (c.actualSpent || 0), 0);
+  const totalAllocated = useMemo(
+    () => budget.categories.reduce((sum, c) => sum + c.allocated, 0),
+    [budget.categories],
+  );
+  const totalSpent = useMemo(
+    () => budget.categories.reduce((sum, c) => sum + (c.actualSpent || 0), 0),
+    [budget.categories],
+  );
 
   return (
     <section className="plan-section" aria-labelledby="budget-heading">

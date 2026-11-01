@@ -4,7 +4,7 @@
  * transition buffer callouts, and interactive milestone checkboxes.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock, CheckCircle2, Circle, Timer } from 'lucide-react';
 import type { TimelineItem } from '../types/event';
 
@@ -40,8 +40,11 @@ function getPhaseClass(phase: string): string {
  * @returns {React.ReactElement} The rendered timeline section.
  */
 export const TimelineSection: React.FC<TimelineSectionProps> = ({ timeline, onToggle }) => {
-  const completedCount = timeline.filter((t) => t.completed).length;
-  const progressPct = timeline.length > 0 ? Math.round((completedCount / timeline.length) * 100) : 0;
+  const completedCount = useMemo(() => timeline.filter((t) => t.completed).length, [timeline]);
+  const progressPct = useMemo(
+    () => (timeline.length > 0 ? Math.round((completedCount / timeline.length) * 100) : 0),
+    [timeline.length, completedCount],
+  );
 
   return (
     <section className="plan-section" aria-labelledby="timeline-heading">

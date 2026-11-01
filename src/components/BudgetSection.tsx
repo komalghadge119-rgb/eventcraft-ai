@@ -77,13 +77,13 @@ export const BudgetSection: React.FC<BudgetSectionProps> = ({ budget }) => {
 
       {/* 5-Pillar Category Matrix */}
       <div className="budget-categories">
-        {budget.categories.map((cat, index) => {
+        {budget.categories.map((cat) => {
           const progress = budget.total > 0 ? (cat.allocated / budget.total) * 100 : 0;
           const spentProgress = cat.allocated > 0 ? ((cat.actualSpent || 0) / cat.allocated) * 100 : 0;
           const isOverBudget = spentProgress > 100;
 
           return (
-            <div key={`budget-${index}`} className="budget-card">
+            <div key={cat.category} className="budget-card">
               <div className="budget-card-header">
                 <span className="budget-card-category">{cat.category}</span>
                 <span className="budget-card-percentage">{cat.percentage}%</span>

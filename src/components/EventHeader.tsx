@@ -4,7 +4,7 @@
  * and architectural color palette with 1-click copy functionality.
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Users, Clock, MapPin, Shirt, Calendar, Copy, Check } from 'lucide-react';
 import type { EventPlan } from '../types/event';
 
@@ -15,6 +15,13 @@ import type { EventPlan } from '../types/event';
 interface EventHeaderProps {
   plan: EventPlan;
 }
+
+/** Milliseconds per day constant for countdown computation. */
+const MS_PER_DAY = 86_400_000;
+/** Milliseconds per hour constant for countdown computation. */
+const MS_PER_HOUR = 3_600_000;
+/** Milliseconds per minute constant for countdown computation. */
+const MS_PER_MINUTE = 60_000;
 
 /**
  * Computes the countdown string from the current date to the event date.
@@ -30,9 +37,9 @@ function computeCountdown(eventDate: string | undefined): string {
 
   if (diffMs <= 0) return '🎉 Event Complete!';
 
-  const days = Math.floor(diffMs / (86400000));
-  const hours = Math.floor((diffMs % 86400000) / 3600000);
-  const minutes = Math.floor((diffMs % 3600000) / 60000);
+  const days = Math.floor(diffMs / MS_PER_DAY);
+  const hours = Math.floor((diffMs % MS_PER_DAY) / MS_PER_HOUR);
+  const minutes = Math.floor((diffMs % MS_PER_HOUR) / MS_PER_MINUTE);
 
   if (days > 0) return `T-minus ${days}d ${hours}h ${minutes}m`;
   if (hours > 0) return `T-minus ${hours}h ${minutes}m`;
@@ -70,7 +77,7 @@ export const EventHeader: React.FC<EventHeaderProps> = ({ plan }) => {
    * @param {string} hex - The HEX color code to copy.
    * @param {number} index - The swatch index for visual feedback.
    */
-  const handleCopyColor = async (hex: string, index: number): Promise<void> => {
+  const handleCopyColor = useCallback(async (hex: string, index: number): Promise<void> => {
     try {
       await navigator.clipboard.writeText(hex);
       setCopiedIndex(index);
@@ -78,7 +85,7 @@ export const EventHeader: React.FC<EventHeaderProps> = ({ plan }) => {
     } catch {
       /* Clipboard API may be unavailable in some environments */
     }
-  };
+  }, []);
 
   return (
     <header className="event-header">

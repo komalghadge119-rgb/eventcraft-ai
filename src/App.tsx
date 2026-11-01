@@ -4,7 +4,7 @@
  * React Suspense skeletons, and a full landing hero for empty state.
  */
 
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useCallback, Suspense, lazy } from 'react';
 import { Sparkles, Loader2 } from 'lucide-react';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Navbar } from './components/Navbar';
@@ -57,6 +57,11 @@ const App: React.FC = () => {
     addGuest,
   } = useEventPlan();
 
+  /** Opens the blueprint synthesis modal. */
+  const handleOpenModal = useCallback(() => setShowModal(true), []);
+  /** Closes the blueprint synthesis modal. */
+  const handleCloseModal = useCallback(() => setShowModal(false), []);
+
   return (
     <ErrorBoundary>
       <a href="#main-content" className="skip-to-content">
@@ -65,7 +70,7 @@ const App: React.FC = () => {
       <div className="app-shell">
         <Navbar
           onLoadPreset={loadPreset}
-          onOpenSynthesizer={() => setShowModal(true)}
+          onOpenSynthesizer={handleOpenModal}
           plan={plan}
         />
 
@@ -111,7 +116,7 @@ const App: React.FC = () => {
                 <div className="landing-actions">
                   <button
                     className="landing-cta-primary"
-                    onClick={() => setShowModal(true)}
+                    onClick={handleOpenModal}
                     type="button"
                     aria-label="Open the blueprint synthesis dialog to create a new event plan"
                     id="landing-synthesize-btn"
@@ -237,7 +242,7 @@ const App: React.FC = () => {
 
         <PlanModal
           isOpen={showModal}
-          onClose={() => setShowModal(false)}
+          onClose={handleCloseModal}
           onSubmit={generatePlan}
           loading={loading}
         />

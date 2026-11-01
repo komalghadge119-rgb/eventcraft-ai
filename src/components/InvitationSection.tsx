@@ -4,7 +4,7 @@
  * and celebratory confetti bursts on successful copy.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Mail, MessageSquare, Copy, Check, PartyPopper } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { InvitationStudio } from '../types/event';
@@ -32,7 +32,7 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({ invitation
    * @param {string} text - The text to copy to the clipboard.
    * @param {string} field - The field identifier for visual feedback tracking.
    */
-  const handleCopy = async (text: string, field: string): Promise<void> => {
+  const handleCopy = useCallback(async (text: string, field: string): Promise<void> => {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedField(field);
@@ -49,7 +49,7 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({ invitation
     } catch {
       /* Clipboard API may not be available in all environments */
     }
-  };
+  }, []);
 
   return (
     <section className="plan-section" aria-labelledby="invitation-heading">

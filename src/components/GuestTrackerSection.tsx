@@ -4,7 +4,7 @@
  * dietary triage alerts, interactive status cycling, and quick-add form.
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Users, UserPlus, AlertCircle, CheckCircle, Clock as ClockIcon, XCircle, Utensils } from 'lucide-react';
 import type { GuestItem } from '../types/event';
 import { DIETARY_ALERT_KEYWORDS } from '../constants';
@@ -69,6 +69,21 @@ export function computeGuestStats(guests: GuestItem[]): {
 }
 
 /**
+ * Returns CSS class for RSVP status badge styling.
+ * Pure utility function defined outside component to avoid re-creation on every render.
+ * @param {string} status - The RSVP status string.
+ * @returns {string} The CSS class suffix.
+ */
+function getRsvpClass(status: string): string {
+  switch (status) {
+    case 'Confirmed': return 'confirmed';
+    case 'Pending': return 'pending';
+    case 'Declined': return 'declined';
+    default: return 'pending';
+  }
+}
+
+/**
  * Guest & RSVP Operations Matrix with live KPI counters, dietary triage alerts,
  * interactive RSVP status cycling, and a quick-add guest form.
  * @param {GuestTrackerSectionProps} props - The component props.
@@ -88,10 +103,10 @@ export const GuestTrackerSection: React.FC<GuestTrackerSectionProps> = ({ guests
   /**
    * Handles submission of the quick-add guest form.
    */
-  const handleAddGuest = (): void => {
+  const handleAddGuest = useCallback((): void => {
     if (!newGuest.name.trim()) return;
     const guest: GuestItem = {
-      id: `g-${Date.now().toString(36)}`,
+      id: `g-${crypto.randomUUID()}`,
       name: newGuest.name.trim(),
       category: newGuest.category,
       rsvpStatus: 'Pending',
@@ -101,21 +116,7 @@ export const GuestTrackerSection: React.FC<GuestTrackerSectionProps> = ({ guests
     onAddGuest(guest);
     setNewGuest({ name: '', category: 'General', dietary: '', plusOnes: 0 });
     setShowAddForm(false);
-  };
-
-  /**
-   * Returns CSS class for RSVP status badge styling.
-   * @param {string} status - The RSVP status string.
-   * @returns {string} The CSS class suffix.
-   */
-  const getRsvpClass = (status: string): string => {
-    switch (status) {
-      case 'Confirmed': return 'confirmed';
-      case 'Pending': return 'pending';
-      case 'Declined': return 'declined';
-      default: return 'pending';
-    }
-  };
+  }, [newGuest, onAddGuest]);
 
   return (
     <section className="plan-section" aria-labelledby="guest-heading">

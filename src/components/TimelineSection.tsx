@@ -61,7 +61,7 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({ timeline, onTo
 
       <div className="timeline-list">
         {timeline.map((item, index) => (
-          <div key={`timeline-${index}`} className={`timeline-card ${item.completed ? 'completed' : ''}`}>
+          <div key={`${item.time}-${item.activity}`} className={`timeline-card ${item.completed ? 'completed' : ''}`}>
             <div className="timeline-card-left">
               <button
                 className="timeline-checkbox"

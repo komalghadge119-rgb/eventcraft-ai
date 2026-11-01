@@ -5,7 +5,7 @@
  * Features category filtering, interactive favorites, impact badges, and budget guidance.
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Lightbulb, Star, Tag, Sparkles, Filter, Check } from 'lucide-react';
 import type { PersonalizedIdea } from '../types/event';
 
@@ -64,10 +64,10 @@ export const PersonalizedIdeasSection: React.FC<PersonalizedIdeasSectionProps> =
     return initialIdeas.filter((i) => i.category === selectedCategory);
   }, [initialIdeas, selectedCategory]);
 
-  const handleToggle = (id: string) => {
+  const handleToggle = useCallback((id: string) => {
     setLocalFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
     if (onToggleFavorite) onToggleFavorite(id);
-  };
+  }, [onToggleFavorite]);
 
   const favoriteCount = Object.values(localFavorites).filter(Boolean).length;
 

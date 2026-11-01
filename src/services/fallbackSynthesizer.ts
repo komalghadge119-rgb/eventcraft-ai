@@ -45,18 +45,50 @@ export function computeBudgetAllocation(
 }
 
 /**
+ * Scales a full timeline to fit the specified event duration.
+ * Preserves the first (Arrival) and last (Wrap-up) items, then selects
+ * proportional middle activities based on available hours.
+ * @param {TimelineItem[]} fullTimeline - The complete timeline for the event archetype.
+ * @param {number} durationHours - The target event duration in hours.
+ * @returns {TimelineItem[]} The duration-scaled timeline.
+ */
+function scaleTimelineByDuration(fullTimeline: TimelineItem[], durationHours: number): TimelineItem[] {
+  if (fullTimeline.length <= 3 || durationHours >= 8) {
+    return fullTimeline;
+  }
+
+  /* For short events (≤ 4h), keep arrival + 2 core items + wrap-up */
+  const first = fullTimeline[0];
+  const last = fullTimeline[fullTimeline.length - 1];
+  const middle = fullTimeline.slice(1, -1);
+
+  /* Scale middle items: ~1 activity per hour minus arrival/wrap-up */
+  const targetMiddleCount = Math.max(2, Math.min(middle.length, Math.floor(durationHours) - 1));
+
+  /* Evenly sample from the middle items */
+  const step = middle.length / targetMiddleCount;
+  const selectedMiddle: TimelineItem[] = [];
+  for (let i = 0; i < targetMiddleCount; i++) {
+    selectedMiddle.push(middle[Math.floor(i * step)]);
+  }
+
+  return [first, ...selectedMiddle, last];
+}
+
+/**
  * Generates a deterministic timeline itinerary based on event duration and type.
  * Includes friction-damped 15-30 minute transition buffers between activities.
+ * Scales timeline item count to match event duration for realistic scheduling.
  * @param {number} durationHours - Total event duration in hours.
  * @param {string} eventType - The type of event for phase customization.
  * @returns {TimelineItem[]} Ordered array of timeline activities.
  */
-function generateTimeline(_durationHours: number, eventType: string): TimelineItem[] {
+function generateTimeline(durationHours: number, eventType: string): TimelineItem[] {
   const isWedding = eventType.toLowerCase().includes('wedding');
   const isHackathon = eventType.toLowerCase().includes('hackathon');
 
   if (isHackathon) {
-    return [
+    const fullTimeline: TimelineItem[] = [
       { time: '09:00 AM', phase: 'Arrival', activity: 'Registration & Badge Pickup', details: 'Teams check in, receive swag kits, and set up workstations with power and networking.', bufferMinutes: 30, completed: false },
       { time: '10:00 AM', phase: 'Core Ceremony', activity: 'Opening Keynote & Challenge Reveal', details: 'Sponsors present challenge statements. Rules and judging criteria announced.', bufferMinutes: 15, completed: false },
       { time: '11:00 AM', phase: 'Core Ceremony', activity: 'Hacking Begins', details: 'Teams start building. Mentor office hours open. API credits distributed.', bufferMinutes: 20, completed: false },
@@ -67,10 +99,11 @@ function generateTimeline(_durationHours: number, eventType: string): TimelineIt
       { time: '03:30 PM', phase: 'Reception', activity: 'Demo Presentations & Judging', details: 'Teams present to judges panel. Audience voting for People\'s Choice award.', bufferMinutes: 20, completed: false },
       { time: '05:00 PM', phase: 'Wrap-up', activity: 'Awards Ceremony & Closing', details: 'Winners announced. Prizes distributed. Group photo and networking mixer.', bufferMinutes: 15, completed: false },
     ];
+    return scaleTimelineByDuration(fullTimeline, durationHours);
   }
 
   if (isWedding) {
-    return [
+    const fullTimeline: TimelineItem[] = [
       { time: '04:00 PM', phase: 'Arrival', activity: 'Guest Reception & Welcome Drinks', details: 'Guests arrive to a curated welcome experience with artisanal beverages and live ambient music.', bufferMinutes: 30, completed: false },
       { time: '05:00 PM', phase: 'Core Ceremony', activity: 'Grand Processional Entry', details: 'The ceremonial procession with traditional music, floral pathways, and dramatic lighting cues.', bufferMinutes: 20, completed: false },
       { time: '05:30 PM', phase: 'Core Ceremony', activity: 'Sacred Ceremony & Vow Exchange', details: 'The main ceremonial proceedings with officiant, cultural rituals, and exchange of vows.', bufferMinutes: 15, completed: false },
@@ -81,10 +114,11 @@ function generateTimeline(_durationHours: number, eventType: string): TimelineIt
       { time: '10:30 PM', phase: 'Reception', activity: 'Dessert Cascade & Cake Cutting', details: 'Grand dessert display with ceremonial cake cutting. Photo opportunities.', bufferMinutes: 20, completed: false },
       { time: '11:00 PM', phase: 'Wrap-up', activity: 'Farewell & Sparkler Send-off', details: 'Distribution of favors, sparkler-lined exit walkway, and departing guest coordination.', bufferMinutes: 15, completed: false },
     ];
+    return scaleTimelineByDuration(fullTimeline, durationHours);
   }
 
   /* Default milestone birthday / soirée timeline */
-  return [
+  const fullTimeline: TimelineItem[] = [
     { time: '07:00 PM', phase: 'Arrival', activity: 'Red Carpet Arrival & Welcome Drinks', details: 'Guests arrive to a curated cocktail reception with ambient lounge music and photo opportunities.', bufferMinutes: 30, completed: false },
     { time: '07:45 PM', phase: 'Core Ceremony', activity: 'Grand Entrance & Toast', details: 'Host makes a dramatic entrance. Welcome toast with premium champagne.', bufferMinutes: 20, completed: false },
     { time: '08:15 PM', phase: 'Reception', activity: 'Seated Dinner & Entertainment', details: 'Multi-course dinner paired with live acoustic performance and video tribute montage.', bufferMinutes: 20, completed: false },
@@ -92,6 +126,7 @@ function generateTimeline(_durationHours: number, eventType: string): TimelineIt
     { time: '10:00 PM', phase: 'Reception', activity: 'Dance Floor & DJ Set', details: 'High-energy DJ set with curated playlist. Interactive photo booth with themed props.', bufferMinutes: 20, completed: false },
     { time: '11:00 PM', phase: 'Wrap-up', activity: 'Midnight Dessert & Farewell', details: 'Dessert cascade station. Personalized favor distribution and sparkler send-off.', bufferMinutes: 15, completed: false },
   ];
+  return scaleTimelineByDuration(fullTimeline, durationHours);
 }
 
 /**
@@ -358,7 +393,7 @@ export function synthesizeFallbackPlan(input: EventInput): EventPlan {
     : `🎉🥂 YOU'RE INVITED! 🥂🎉\n\n✨ An unforgettable evening awaits!\n\n📅 ${input.eventDate}\n🎨 Theme: ${theme.concept.split('.')[0]}\n👔 ${theme.dressCode}\n\n💌 RSVP: Tap below 👇\n🔗 [RSVP Link]\n\nSee you there! 🌟`;
 
   return {
-    id: `plan-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    id: `plan-${crypto.randomUUID()}`,
     createdAt: new Date().toISOString(),
     eventType: input.eventType,
     eventDate: input.eventDate,

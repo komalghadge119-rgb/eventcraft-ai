@@ -59,7 +59,7 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
    * Handles form field changes with type coercion for numeric inputs.
    * @param {React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>} e - The change event.
    */
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -67,17 +67,27 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
         ? Number(value) || 0
         : value,
     }));
-  };
+  }, []);
 
   /**
-   * Handles form submission with input validation.
+   * Handles form submission with comprehensive input validation.
+   * Validates required fields and enforces minimum budget and guest count constraints.
    * @param {React.FormEvent} e - The form submission event.
    */
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmit = useCallback(async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    if (!formData.eventDate) {
+      return;
+    }
+    if (formData.totalBudget < 1) {
+      return;
+    }
+    if (formData.guestCount < 1) {
+      return;
+    }
     await onSubmit(formData);
     onClose();
-  };
+  }, [formData, onSubmit, onClose]);
 
   if (!isOpen) return null;
 
@@ -134,6 +144,8 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
                 className="form-input"
                 value={formData.eventDate}
                 onChange={handleChange}
+                required
+                aria-required="true"
               />
             </div>
 
@@ -146,7 +158,9 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
                 className="form-input"
                 value={formData.totalBudget}
                 onChange={handleChange}
-                min={0}
+                min={1}
+                required
+                aria-required="true"
               />
             </div>
 

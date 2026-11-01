@@ -60,14 +60,44 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
   /**
    * Saves the API key to session storage and closes the modal.
    */
-  const handleSaveApiKey = (): void => {
+  const handleSaveApiKey = useCallback((): void => {
     if (apiKey.trim()) {
       storeApiKey(apiKey.trim());
       setHasKey(true);
       setShowApiModal(false);
       setApiKey('');
     }
-  };
+  }, [apiKey]);
+
+  /**
+   * Toggles the presets dropdown menu and closes the export menu.
+   */
+  const handleTogglePresets = useCallback((): void => {
+    setShowPresetsMenu((prev) => !prev);
+    setShowExportMenu(false);
+  }, []);
+
+  /**
+   * Toggles the export dropdown menu and closes the presets menu.
+   */
+  const handleToggleExport = useCallback((): void => {
+    setShowExportMenu((prev) => !prev);
+    setShowPresetsMenu(false);
+  }, []);
+
+  /**
+   * Opens the API key configuration modal.
+   */
+  const handleOpenApiModal = useCallback((): void => {
+    setShowApiModal(true);
+  }, []);
+
+  /**
+   * Closes the API key configuration modal.
+   */
+  const handleCloseApiModal = useCallback((): void => {
+    setShowApiModal(false);
+  }, []);
 
   return (
     <nav className="navbar" role="navigation" aria-label="Primary navigation">
@@ -85,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
           <div className="navbar-dropdown-wrapper">
             <button
               className="navbar-btn navbar-btn-presets"
-              onClick={() => { setShowPresetsMenu(!showPresetsMenu); setShowExportMenu(false); }}
+              onClick={handleTogglePresets}
               type="button"
               aria-expanded={showPresetsMenu}
               aria-haspopup="true"
@@ -131,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
           {/* API Key Configuration */}
           <button
             className={`navbar-btn ${hasKey ? 'navbar-btn-configured' : 'navbar-btn-key'}`}
-            onClick={() => setShowApiModal(true)}
+            onClick={handleOpenApiModal}
             type="button"
             aria-label="Configure Gemini API key"
             id="api-key-trigger"
@@ -145,7 +175,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
             <div className="navbar-dropdown-wrapper">
               <button
                 className="navbar-btn navbar-btn-export"
-                onClick={() => { setShowExportMenu(!showExportMenu); setShowPresetsMenu(false); }}
+                onClick={handleToggleExport}
                 type="button"
                 aria-expanded={showExportMenu}
                 aria-haspopup="true"
@@ -195,7 +225,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
       {showApiModal && (
         <div
           className="modal-overlay"
-          onClick={() => setShowApiModal(false)}
+          onClick={handleCloseApiModal}
           role="dialog"
           aria-modal="true"
           aria-label="Configure Gemini API Key"
@@ -208,7 +238,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
               </h3>
               <button
                 className="modal-close"
-                onClick={() => setShowApiModal(false)}
+                onClick={handleCloseApiModal}
                 type="button"
                 aria-label="Close API key configuration dialog"
               >
@@ -239,7 +269,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
             <div className="modal-footer">
               <button
                 className="modal-btn modal-btn-secondary"
-                onClick={() => setShowApiModal(false)}
+                onClick={handleCloseApiModal}
                 type="button"
               >
                 Cancel

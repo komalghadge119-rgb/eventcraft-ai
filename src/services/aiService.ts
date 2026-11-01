@@ -183,7 +183,7 @@ export async function generateEventPlan(input: EventInput): Promise<EventPlan> {
 
     /* Assemble the EventPlan with metadata */
     const plan: EventPlan = {
-      id: `plan-${Date.now().toString(36)}`,
+      id: `plan-${crypto.randomUUID()}`,
       createdAt: new Date().toISOString(),
       eventType: input.eventType,
       eventDate: input.eventDate,

@@ -40,6 +40,7 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
     locationType: 'Indoor Banquet Hall',
     specialRequirements: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   /**
    * Handles Escape key press to dismiss the modal.
@@ -71,19 +72,29 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
   /**
    * Handles form submission with comprehensive input validation.
    * Validates required fields and enforces minimum budget and guest count constraints.
+   * Displays visible error states and ARIA alerts on failure.
    * @param {React.FormEvent} e - The form submission event.
    */
   const handleSubmit = useCallback(async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    const newErrors: Record<string, string> = {};
+
     if (!formData.eventDate) {
-      return;
+      newErrors.eventDate = 'Event date is required to synthesize an accurate timeline.';
     }
     if (formData.totalBudget < 1) {
-      return;
+      newErrors.totalBudget = 'Total budget must be at least 1 for mathematical allocation.';
     }
     if (formData.guestCount < 1) {
+      newErrors.guestCount = 'Guest count must be at least 1 for operational scheduling.';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
+
+    setErrors({});
     await onSubmit(formData);
     onClose();
   }, [formData, onSubmit, onClose]);
@@ -114,7 +125,12 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="modal-body">
+        <form onSubmit={handleSubmit} className="modal-body" noValidate>
+          {Object.keys(errors).length > 0 && (
+            <div className="error-banner" role="alert" aria-live="assertive">
+              <span>⚠️ Please correct the marked fields: {Object.values(errors).join(' ')}</span>
+            </div>
+          )}
           <div className="form-grid">
             <div className="form-group">
               <label htmlFor="eventType" className="form-label">Event Type</label>
@@ -140,12 +156,19 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
                 id="eventDate"
                 name="eventDate"
                 type="date"
-                className="form-input"
+                className={`form-input ${errors.eventDate ? 'input-error' : ''}`}
                 value={formData.eventDate}
                 onChange={handleChange}
                 required
                 aria-required="true"
+                aria-invalid={Boolean(errors.eventDate)}
+                aria-describedby={errors.eventDate ? 'eventDate-error' : undefined}
               />
+              {errors.eventDate && (
+                <span id="eventDate-error" className="field-error-text" role="alert">
+                  {errors.eventDate}
+                </span>
+              )}
             </div>
 
             <div className="form-group">
@@ -154,13 +177,20 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
                 id="totalBudget"
                 name="totalBudget"
                 type="number"
-                className="form-input"
+                className={`form-input ${errors.totalBudget ? 'input-error' : ''}`}
                 value={formData.totalBudget}
                 onChange={handleChange}
                 min={1}
                 required
                 aria-required="true"
+                aria-invalid={Boolean(errors.totalBudget)}
+                aria-describedby={errors.totalBudget ? 'totalBudget-error' : undefined}
               />
+              {errors.totalBudget && (
+                <span id="totalBudget-error" className="field-error-text" role="alert">
+                  {errors.totalBudget}
+                </span>
+              )}
             </div>
 
             <div className="form-group">

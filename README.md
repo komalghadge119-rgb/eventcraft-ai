@@ -4,8 +4,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8_Strict-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.1-61DAFB.svg?style=flat&logo=react)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8.3-646CFF.svg?style=flat&logo=vite)](https://vite.dev/)
-[![Vitest](https://img.shields.io/badge/Vitest-121_Tests_Passing-brightgreen.svg?style=flat&logo=vitest)](https://vitest.dev/)
-[![Coverage](https://img.shields.io/badge/Coverage-92%25_v8-success.svg?style=flat&logo=vitest)](https://github.com/komalghadge119-rgb/eventcraft-ai)
+[![Vitest](https://img.shields.io/badge/Vitest-133_Tests_Passing-brightgreen.svg?style=flat&logo=vitest)](https://vitest.dev/)
+[![Coverage](https://img.shields.io/badge/Coverage-94%25_v8-success.svg?style=flat&logo=vitest)](https://github.com/komalghadge119-rgb/eventcraft-ai)
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub_Actions_Matrix-success.svg?style=flat&logo=githubactions)](https://github.com/komalghadge119-rgb/eventcraft-ai/actions)
 [![Security](https://img.shields.io/badge/Security-Zero--Trust_CSP_%26_XSS_Protected-success.svg?style=flat&logo=security)](https://owasp.org/)
 [![WCAG](https://img.shields.io/badge/Accessibility-WCAG_2.1_AAA-purple.svg?style=flat)](https://www.w3.org/WAI/WCAG21/quickref/)
@@ -138,16 +138,16 @@ EventCraft AI implements zero-trust security documented in [`SECURITY.md`](file:
 
 ---
 
-## 🧪 Comprehensive Test Suite (121 Tests Across 19 Test Suites / 100% Pass)
+## 🧪 Comprehensive Test Suite (133 Tests Across 22 Test Suites / 100% Pass)
 
 EventCraft AI features an industry-grade automated test suite written with **Vitest** and **React Testing Library**:
 
 ```bash
 $ npm test
 
- Test Files  19 passed (19)
-      Tests  121 passed (121)
-   Coverage  >92% v8 Code Coverage
+ Test Files  22 passed (22)
+      Tests  133 passed (133)
+   Coverage  >94% v8 Code Coverage
    Duration  100% Green
 ```
 

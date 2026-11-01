@@ -15,3 +15,4 @@ Thank you for your interest in contributing to EventCraft AI! We maintain strict
 2. Implement your changes following clean architecture boundaries.
 3. Run `npm run typecheck`, `npm test`, and `npm run build`.
 4. Submit a Pull Request with a conventional commit message.
+

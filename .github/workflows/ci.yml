@@ -31,6 +31,9 @@ jobs:
       - name: Strict TypeScript Compilation (Zero Errors)
         run: npm run typecheck
 
+      - name: Code Quality & Architectural Integrity Lint
+        run: npm run lint
+
       - name: Execute Vitest Suite (100% Pass)
         run: npm test
 
@@ -41,4 +44,4 @@ jobs:
         run: npm run build
 
       - name: Verify Security & Zero Vulnerabilities
-        run: npm audit --audit-level=high || true
+        run: npm audit --audit-level=high

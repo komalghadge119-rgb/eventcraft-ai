@@ -119,29 +119,29 @@ export const EventHeader: React.FC<EventHeaderProps> = ({ plan }) => {
         {/* Architectural Color Palette */}
         <div className="color-palette-section">
           <span className="palette-label">Architectural Palette</span>
-          <div className="color-palette" role="list" aria-label="Event color palette">
+          <ul className="color-palette" aria-label="Event color palette">
             {plan.eventSummary.colorPalette.map((hex, index) => (
-              <button
-                key={`${hex}-${index}`}
-                className="color-swatch"
-                style={{ backgroundColor: hex }}
-                onClick={() => handleCopyColor(hex, index)}
-                type="button"
-                role="listitem"
-                aria-label={`Copy color ${hex} to clipboard`}
-                title={hex}
-              >
-                <span className="swatch-overlay">
-                  {copiedIndex === index ? (
-                    <Check size={14} aria-hidden="true" />
-                  ) : (
-                    <Copy size={14} aria-hidden="true" />
-                  )}
-                </span>
-                <span className="swatch-hex">{hex}</span>
-              </button>
+              <li key={`${hex}-${index}`} className="color-swatch-item">
+                <button
+                  className="color-swatch"
+                  style={{ backgroundColor: hex }}
+                  onClick={() => handleCopyColor(hex, index)}
+                  type="button"
+                  aria-label={`Copy color ${hex} to clipboard`}
+                  title={hex}
+                >
+                  <span className="swatch-overlay">
+                    {copiedIndex === index ? (
+                      <Check size={14} aria-hidden="true" />
+                    ) : (
+                      <Copy size={14} aria-hidden="true" />
+                    )}
+                  </span>
+                  <span className="swatch-hex">{hex}</span>
+                </button>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         {plan.eventDate && (

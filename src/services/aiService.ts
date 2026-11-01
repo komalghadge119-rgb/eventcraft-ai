@@ -1,78 +1,16 @@
 /**
  * @fileoverview Google Gemini 2.0 Flash AI service for EventCraft AI.
  * Uses the official @google/genai TypeScript SDK with schema-enforced JSON output.
- * Includes comprehensive system prompt for the 5-Agent Cognitive Council architecture.
+ * Implements runtime type guards, input sanitization, and deterministic fallback failover.
  */
 
 import { GoogleGenAI } from '@google/genai';
 import type { EventInput, EventPlan } from '../types/event';
 import { GEMINI_MODEL_ID, SESSION_KEY_API } from '../constants';
+import { SYSTEM_INSTRUCTION } from '../constants/prompts';
 import { synthesizeFallbackPlan, generatePersonalizedIdeas } from './fallbackSynthesizer';
+import { sanitizeInput } from '../utils/sanitizer';
 import { logger } from '../utils/logger';
-
-/**
- * System instruction prompt injected into every Gemini API request.
- * Commands the model to operate as a 5-Agent Cognitive Council producing
- * structured JSON output adhering to the EventPlan schema.
- * @constant {string}
- */
-const SYSTEM_INSTRUCTION = `# IDENTITY & SYSTEM ROLE
-You are "EventCraft Core" — an autonomous, hyper-specialized Event Architect & Operational Intelligence Engine. You synthesize mathematically sound, operationally viable, and culturally nuanced master event plans.
-
-When given an event blueprint request, synthesize output through 5 specialized sub-agents:
-1. [ARCHITECT]: Theme Concept, Color Palette (4 HEX codes), Dress Code, Tagline, and Dual-channel Invitation Copy (formal + WhatsApp).
-2. [CHRONOPLANNER]: Hourly schedule with 15–30 min transition buffers between activities.
-3. [QUANT]: 5-pillar budget allocation (Venue 35%, Food 28%, Decor 15%, Entertainment 12%, Logistics 10%) with exact 12% contingency reserve satisfying the invariant: total = sum(pillar allocations) + contingency.
-4. [LOGISTICS]: Procurement milestones with contractual SLA clauses and vendor negotiation checks.
-5. [SENTINEL]: FMEA risks with probability/impact ratings and measurable trigger conditions for automated Plan B activation.
-
-CRITICAL RULES:
-- Output ONLY raw JSON. No markdown fences, no explanations, no preamble.
-- All budget math must be mathematically coherent: total = sum(all category allocated amounts) + contingencyReserve.
-- The contingencyReserve must be exactly 12% of the total budget.
-- Color palette must contain exactly 4 valid HEX color codes.
-- Timeline must include buffer minutes (15-30) between each activity.
-- Each risk must have a specific, measurable triggerCondition.
-
-Output raw JSON adhering strictly to this schema:
-{
-  "eventSummary": {
-    "title": "string",
-    "themeConcept": "string (2-3 sentences describing the aesthetic vision)",
-    "colorPalette": ["#HEX1", "#HEX2", "#HEX3", "#HEX4"],
-    "dressCode": "string",
-    "tagline": "string (memorable one-liner)"
-  },
-  "budgetAllocation": {
-    "total": number,
-    "currency": "string (ISO 4217)",
-    "contingencyReserve": number (12% of total),
-    "categories": [
-      { "category": "Venue & Infrastructure", "allocated": number, "percentage": 35, "tips": "string", "actualSpent": 0 },
-      { "category": "Food & Beverage / Catering", "allocated": number, "percentage": 28, "tips": "string", "actualSpent": 0 },
-      { "category": "Decor, Lighting & Atmospheric AV", "allocated": number, "percentage": 15, "tips": "string", "actualSpent": 0 },
-      { "category": "Entertainment, Emcee & Media Production", "allocated": number, "percentage": 12, "tips": "string", "actualSpent": 0 },
-      { "category": "Logistics, Favors & Guest Care", "allocated": number, "percentage": 10, "tips": "string", "actualSpent": 0 }
-    ]
-  },
-  "timelineItinerary": [
-    { "time": "HH:MM AM/PM", "phase": "Arrival | Core Ceremony | Reception | Wrap-up", "activity": "string", "details": "string", "bufferMinutes": 15-30, "completed": false }
-  ],
-  "vendorChecklist": [
-    { "id": "v1", "category": "Venue|Catering|Media|Decor|Entertainment|Logistics|Stationery|Favors", "task": "string", "deadlineWeeksBefore": number, "priority": "High|Medium|Low", "negotiationCheck": "string (specific SLA clause)", "completed": false }
-  ],
-  "invitationStudio": {
-    "formalInvitation": "string (3-4 sentence formal invitation)",
-    "casualWhatsAppCopy": "string (emoji-rich casual WhatsApp message)",
-    "rsvpCallToAction": "string"
-  },
-  "personalizedIdeas": [
-    { "id": "idea-1", "title": "string", "category": "Decor & Ambiance|Culinary & Mixology|Interactive Entertainment|Attendee Keepsakes|Experiential Moments", "description": "string", "impactTag": "High Visual Impact|Emotional Resonance|Viral & Social|Signature Experience", "estimatedBudgetImpact": "string", "isFavorited": false }
-  ],
-  "riskContingencyMatrix": [
-    { "risk": "string", "probability": "Low|Med|High", "impact": "Low|Med|High|Critical", "contingencyPlan": "string", "triggerCondition": "string (measurable condition)" }
-  ]
-}`;
 
 /**
  * Strips markdown code fences and other wrappers from raw LLM text output.
@@ -125,28 +63,75 @@ export function storeApiKey(key: string): void {
 }
 
 /**
- * Builds the user prompt for the Gemini API request from event input parameters.
+ * Builds the user prompt for the Gemini API request from sanitized event input parameters.
+ * Defends against prompt injection via multi-stage HTML entity sanitization.
  * @param {EventInput} input - The event configuration input.
  * @returns {string} The formatted user prompt string.
  */
-function buildUserPrompt(input: EventInput): string {
+export function buildUserPrompt(input: EventInput): string {
+  const cleanType = sanitizeInput(input.eventType);
+  const cleanLocation = sanitizeInput(input.locationType);
+  const cleanReqs = sanitizeInput(input.specialRequirements || 'None specified');
+
   return `Synthesize a complete master event blueprint for the following event:
 
-Event Type: ${input.eventType}
+Event Type: ${cleanType}
 Event Date: ${input.eventDate}
 Total Budget: ${input.currency} ${input.totalBudget.toLocaleString()}
 Expected Guests: ${input.guestCount}
 Duration: ${input.durationHours} hours
-Location Setting: ${input.locationType}
-Special Requirements: ${input.specialRequirements || 'None specified'}
+Location Setting: ${cleanLocation}
+Special Requirements: ${cleanReqs}
 
 Generate the full plan with all 5 agents contributing their specialized outputs.`;
 }
 
 /**
+ * Runtime type guard validating the parsed LLM payload conforms to EventPlan requirements.
+ * Verifies structural integrity of all 5 agent domains prior to domain state ingestion.
+ * @param {unknown} value - The raw parsed JSON payload from the AI engine.
+ * @returns {boolean} True if the payload conforms to the expected schema.
+ */
+export function isValidEventPlanPayload(value: unknown): value is Record<string, unknown> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return false;
+  }
+
+  const obj = value as Record<string, unknown>;
+
+  const hasEventSummary =
+    typeof obj.eventSummary === 'object' &&
+    obj.eventSummary !== null &&
+    typeof (obj.eventSummary as Record<string, unknown>).title === 'string';
+
+  const hasBudgetAllocation =
+    typeof obj.budgetAllocation === 'object' &&
+    obj.budgetAllocation !== null &&
+    typeof (obj.budgetAllocation as Record<string, unknown>).total === 'number' &&
+    Array.isArray((obj.budgetAllocation as Record<string, unknown>).categories);
+
+  const hasTimeline = Array.isArray(obj.timelineItinerary);
+  const hasVendors = Array.isArray(obj.vendorChecklist);
+  const hasInvitation =
+    typeof obj.invitationStudio === 'object' &&
+    obj.invitationStudio !== null &&
+    typeof (obj.invitationStudio as Record<string, unknown>).formalInvitation === 'string';
+  const hasRisks = Array.isArray(obj.riskContingencyMatrix);
+
+  return Boolean(
+    hasEventSummary &&
+    hasBudgetAllocation &&
+    hasTimeline &&
+    hasVendors &&
+    hasInvitation &&
+    hasRisks,
+  );
+}
+
+/**
  * Generates a complete EventPlan using Google Gemini 2.0 Flash.
  * Falls back to the deterministic synthesizer if the API is unavailable,
- * the key is missing, or the response fails to parse.
+ * the key is missing, or the response fails runtime validation.
  * @param {EventInput} input - The user's event configuration input.
  * @returns {Promise<EventPlan>} The synthesized event plan.
  */
@@ -179,9 +164,14 @@ export async function generateEventPlan(input: EventInput): Promise<EventPlan> {
     }
 
     const cleanedJson = cleanJsonString(rawText);
-    const parsed = JSON.parse(cleanedJson);
+    const parsed: unknown = JSON.parse(cleanedJson);
 
-    /* Assemble the EventPlan with metadata */
+    if (!isValidEventPlanPayload(parsed)) {
+      logger.warn('AI response failed structural schema validation. Falling back to synthesizer.');
+      return synthesizeFallbackPlan(input);
+    }
+
+    /* Assemble the EventPlan with strict type assurance */
     const plan: EventPlan = {
       id: `plan-${crypto.randomUUID()}`,
       createdAt: new Date().toISOString(),
@@ -191,15 +181,15 @@ export async function generateEventPlan(input: EventInput): Promise<EventPlan> {
       durationHours: input.durationHours,
       locationType: input.locationType,
       specialRequirements: input.specialRequirements,
-      eventSummary: parsed.eventSummary,
-      budgetAllocation: parsed.budgetAllocation,
-      timelineItinerary: parsed.timelineItinerary,
-      vendorChecklist: parsed.vendorChecklist,
-      invitationStudio: parsed.invitationStudio,
+      eventSummary: parsed.eventSummary as EventPlan['eventSummary'],
+      budgetAllocation: parsed.budgetAllocation as EventPlan['budgetAllocation'],
+      timelineItinerary: parsed.timelineItinerary as EventPlan['timelineItinerary'],
+      vendorChecklist: parsed.vendorChecklist as EventPlan['vendorChecklist'],
+      invitationStudio: parsed.invitationStudio as EventPlan['invitationStudio'],
       personalizedIdeas: Array.isArray(parsed.personalizedIdeas) && parsed.personalizedIdeas.length > 0
-        ? parsed.personalizedIdeas
+        ? (parsed.personalizedIdeas as EventPlan['personalizedIdeas'])
         : generatePersonalizedIdeas(input.eventType),
-      riskContingencyMatrix: parsed.riskContingencyMatrix,
+      riskContingencyMatrix: parsed.riskContingencyMatrix as EventPlan['riskContingencyMatrix'],
       guestList: [],
     };
 

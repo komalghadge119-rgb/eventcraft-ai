@@ -75,7 +75,6 @@ export const PersonalizedIdeasSection: React.FC<PersonalizedIdeasSectionProps> =
     <section
       className="plan-section personalized-ideas-section"
       aria-labelledby="personalized-ideas-heading"
-      role="region"
       id="personalized-ideas"
     >
       <div className="section-header">

@@ -1,57 +1,140 @@
 /**
- * @fileoverview useEventPlan hook tests for EventCraft AI.
- * Validates preset switching, state updates, and deterministic synthesizer behavior.
+ * @fileoverview Unit and state integration tests for the useEventPlan custom hook.
+ * Tests initial state, preset loading, timeline toggling, vendor tracking, RSVP cycling,
+ * guest addition, idea favoriting, and budget expenditure tracking using renderHook and act.
  */
 
 import { describe, it, expect } from 'vitest';
-import { synthesizeFallbackPlan } from '../services/fallbackSynthesizer';
-import { PRESET_MAP, PRESET_ROYAL_WEDDING, PRESET_HACKATHON, PRESET_SOIREE } from '../constants';
+import { renderHook, act } from '@testing-library/react';
+import { useEventPlan } from '../hooks/useEventPlan';
+import type { GuestItem } from '../types/event';
 
-describe('useEventPlan / Fallback Synthesizer — Preset Loading', () => {
-  it('should produce a valid plan for the royal_wedding preset', () => {
-    const plan = synthesizeFallbackPlan(PRESET_MAP['royal_wedding']);
-    expect(plan).toBeDefined();
-    expect(plan.guestCount).toBe(PRESET_ROYAL_WEDDING.guestCount);
-    expect(plan.budgetAllocation.total).toBe(PRESET_ROYAL_WEDDING.totalBudget);
+describe('useEventPlan Custom Hook', () => {
+  it('initializes with null plan and idle loading state', () => {
+    const { result } = renderHook(() => useEventPlan());
+    expect(result.current.plan).toBeNull();
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBeNull();
   });
 
-  it('should produce a valid plan for the hackathon preset', () => {
-    const plan = synthesizeFallbackPlan(PRESET_MAP['hackathon']);
-    expect(plan).toBeDefined();
-    expect(plan.guestCount).toBe(PRESET_HACKATHON.guestCount);
-    expect(plan.durationHours).toBe(PRESET_HACKATHON.durationHours);
+  it('loads a preset plan into state correctly', () => {
+    const { result } = renderHook(() => useEventPlan());
+
+    act(() => {
+      result.current.loadPreset('royal_wedding');
+    });
+
+    expect(result.current.plan).toBeDefined();
+    expect(result.current.plan?.eventType).toBe('Royal Heritage Wedding');
+    expect(result.current.plan?.guestCount).toBe(350);
+    expect(result.current.plan?.budgetAllocation.total).toBe(3500000);
   });
 
-  it('should produce a valid plan for the soiree preset', () => {
-    const plan = synthesizeFallbackPlan(PRESET_MAP['soiree']);
-    expect(plan).toBeDefined();
-    expect(plan.guestCount).toBe(PRESET_SOIREE.guestCount);
-    expect(plan.budgetAllocation.total).toBe(PRESET_SOIREE.totalBudget);
+  it('toggles timeline item milestone completion status', () => {
+    const { result } = renderHook(() => useEventPlan());
+
+    act(() => {
+      result.current.loadPreset('royal_wedding');
+    });
+
+    const initialStatus = result.current.plan?.timelineItinerary[0].completed;
+
+    act(() => {
+      result.current.toggleTimelineItem(0);
+    });
+
+    expect(result.current.plan?.timelineItinerary[0].completed).toBe(!initialStatus);
   });
 
-  it('should generate unique IDs for each plan synthesis', () => {
-    const plan1 = synthesizeFallbackPlan(PRESET_ROYAL_WEDDING);
-    const plan2 = synthesizeFallbackPlan(PRESET_ROYAL_WEDDING);
-    expect(plan1.id).not.toBe(plan2.id);
-  });
-});
+  it('toggles vendor procurement task completion status', () => {
+    const { result } = renderHook(() => useEventPlan());
 
-describe('useEventPlan / Fallback Synthesizer — Plan Structure', () => {
-  it('should always produce all 5 required EventPlan sections', () => {
-    const plan = synthesizeFallbackPlan(PRESET_ROYAL_WEDDING);
-    expect(plan.eventSummary).toBeDefined();
-    expect(plan.budgetAllocation).toBeDefined();
-    expect(plan.timelineItinerary).toBeDefined();
-    expect(plan.vendorChecklist).toBeDefined();
-    expect(plan.invitationStudio).toBeDefined();
-    expect(plan.personalizedIdeas).toBeDefined();
-    expect(plan.personalizedIdeas.length).toBeGreaterThan(0);
-    expect(plan.riskContingencyMatrix).toBeDefined();
+    act(() => {
+      result.current.loadPreset('royal_wedding');
+    });
+
+    const targetId = result.current.plan?.vendorChecklist[0].id ?? 'v1';
+
+    act(() => {
+      result.current.toggleVendorTask(targetId);
+    });
+
+    const updatedTask = result.current.plan?.vendorChecklist.find((v) => v.id === targetId);
+    expect(updatedTask?.completed).toBe(true);
   });
 
-  it('should have createdAt as a valid ISO 8601 timestamp', () => {
-    const plan = synthesizeFallbackPlan(PRESET_ROYAL_WEDDING);
-    const parsed = new Date(plan.createdAt);
-    expect(parsed.toString()).not.toBe('Invalid Date');
+  it('cycles guest RSVP status: Confirmed -> Pending -> Declined -> Confirmed', () => {
+    const { result } = renderHook(() => useEventPlan());
+
+    act(() => {
+      result.current.loadPreset('royal_wedding');
+    });
+
+    const firstGuest = result.current.plan?.guestList?.[0];
+    const guestId = firstGuest?.id ?? 'g1';
+
+    act(() => {
+      result.current.cycleGuestRsvp(guestId);
+    });
+
+    const updatedGuest = result.current.plan?.guestList?.find((g) => g.id === guestId);
+    expect(updatedGuest?.rsvpStatus).toBe('Pending');
+  });
+
+  it('adds a new guest to the plan guest list', () => {
+    const { result } = renderHook(() => useEventPlan());
+
+    act(() => {
+      result.current.loadPreset('royal_wedding');
+    });
+
+    const initialCount = result.current.plan?.guestList?.length ?? 0;
+    const newGuest: GuestItem = {
+      id: 'g-custom-1',
+      name: 'Rohan Mehra',
+      category: 'VIP',
+      rsvpStatus: 'Confirmed',
+      plusOnes: 1,
+      dietary: 'Nut Allergy',
+    };
+
+    act(() => {
+      result.current.addGuest(newGuest);
+    });
+
+    expect(result.current.plan?.guestList?.length).toBe(initialCount + 1);
+    expect(result.current.plan?.guestList?.some((g) => g.name === 'Rohan Mehra')).toBe(true);
+  });
+
+  it('updates actual spent expenditure for budget categories', () => {
+    const { result } = renderHook(() => useEventPlan());
+
+    act(() => {
+      result.current.loadPreset('royal_wedding');
+    });
+
+    act(() => {
+      result.current.updateActualSpent(750000, 0);
+    });
+
+    expect(result.current.plan?.budgetAllocation.categories[0].actualSpent).toBe(750000);
+  });
+
+  it('toggles favorited status of personalized ideas', () => {
+    const { result } = renderHook(() => useEventPlan());
+
+    act(() => {
+      result.current.loadPreset('royal_wedding');
+    });
+
+    const firstIdeaId = result.current.plan?.personalizedIdeas[0].id ?? 'idea-w1';
+    const initialFav = result.current.plan?.personalizedIdeas[0].isFavorited;
+
+    act(() => {
+      result.current.toggleIdeaFavorite(firstIdeaId);
+    });
+
+    const updatedIdea = result.current.plan?.personalizedIdeas.find((i) => i.id === firstIdeaId);
+    expect(updatedIdea?.isFavorited).toBe(!initialFav);
   });
 });

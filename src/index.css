@@ -1519,3 +1519,47 @@ body {
   color: #0f766e;
 }
 
+/* ────────────────── WCAG 2.1 AAA Accessibility Enhancements ────────────────── */
+
+/* High-Visibility Keyboard Focus Rings */
+:focus-visible {
+  outline: 3px solid var(--antique-brass) !important;
+  outline-offset: 3px !important;
+  border-radius: var(--radius-sm);
+}
+
+/* Form Error Styling */
+.input-error {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 1px #dc2626 !important;
+}
+
+.field-error-text {
+  display: block;
+  font-size: 0.75rem;
+  color: #dc2626;
+  font-weight: 500;
+  margin-top: 0.35rem;
+}
+
+/* Motion Sensitivity Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Windows High Contrast / Forced Colors Mode */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid Highlight !important;
+  }
+  .navbar-btn, .modal-btn, .landing-cta-primary {
+    border: 2px solid ButtonText;
+  }
+}
+
+

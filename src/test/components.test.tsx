@@ -3,7 +3,6 @@
  * Tests rendering, interactions, accessibility roles, and user flows using React Testing Library.
  */
 
-import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { PersonalizedIdeasSection } from '../components/PersonalizedIdeasSection';

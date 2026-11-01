@@ -49,10 +49,9 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
   }, [onClose]);
 
   useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscapeKey);
-      return () => document.removeEventListener('keydown', handleEscapeKey);
-    }
+    if (!isOpen) return;
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => document.removeEventListener('keydown', handleEscapeKey);
   }, [isOpen, handleEscapeKey]);
 
   /**

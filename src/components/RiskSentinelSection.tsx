@@ -75,7 +75,7 @@ export const RiskSentinelSection: React.FC<RiskSentinelSectionProps> = ({ risks 
       )}
 
       <div className="risk-grid">
-        {risks.map((risk, index) => (
+        {risks.map((risk) => (
           <div key={`risk-${risk.risk}`} className={`risk-card impact-${getImpactClass(risk.impact)}`}>
             <div className="risk-card-header">
               <span className="risk-title">{risk.risk}</span>

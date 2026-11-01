@@ -9,7 +9,7 @@ import type { EventInput, EventPlan } from '../types/event';
 import { GEMINI_MODEL_ID, SESSION_KEY_API } from '../constants';
 import { SYSTEM_INSTRUCTION } from '../constants/prompts';
 import { synthesizeFallbackPlan, generatePersonalizedIdeas } from './fallbackSynthesizer';
-import { sanitizeInput } from '../utils/sanitizer';
+import { sanitizeInput, deepSanitize } from '../utils/sanitizer';
 import { logger } from '../utils/logger';
 
 /**
@@ -164,7 +164,8 @@ export async function generateEventPlan(input: EventInput): Promise<EventPlan> {
     }
 
     const cleanedJson = cleanJsonString(rawText);
-    const parsed: unknown = JSON.parse(cleanedJson);
+    const rawParsed: unknown = JSON.parse(cleanedJson);
+    const parsed: unknown = deepSanitize(rawParsed);
 
     if (!isValidEventPlanPayload(parsed)) {
       logger.warn('AI response failed structural schema validation. Falling back to synthesizer.');

@@ -107,11 +107,11 @@ export const PlanModal: React.FC<PlanModalProps> = ({ isOpen, onClose, onSubmit,
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Synthesize new event blueprint"
+      aria-labelledby="plan-modal-title"
     >
       <div className="modal-card modal-card-wide" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3 className="modal-title">
+          <h3 className="modal-title" id="plan-modal-title">
             <Sparkles size={20} aria-hidden="true" />
             Synthesize New Blueprint
           </h3>

@@ -228,11 +228,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onLoadPreset, onOpenSynthesizer,
           onClick={handleCloseApiModal}
           role="dialog"
           aria-modal="true"
-          aria-label="Configure Gemini API Key"
+          aria-labelledby="api-key-modal-title"
         >
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h3 className="modal-title">
+              <h3 className="modal-title" id="api-key-modal-title">
                 <Key size={20} aria-hidden="true" />
                 Configure Gemini API Key
               </h3>

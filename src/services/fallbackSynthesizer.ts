@@ -10,6 +10,7 @@ import {
   BUDGET_CATEGORY_LABELS,
   CONTINGENCY_RESERVE_RATE,
 } from '../constants';
+import { WEDDING_IDEAS, HACKATHON_IDEAS, DEFAULT_IDEAS } from '../constants/ideas';
 
 /**
  * Computes the 5-pillar budget allocation with a 12% dynamic contingency reserve.
@@ -188,161 +189,19 @@ function generateDefaultGuestList(guestCount: number): GuestItem[] {
 /**
  * Generates bespoke creative personalized ideas tailored to the event archetype.
  * Fulfills PromptWars Challenge 5 "personalized ideas" specification.
+ * Pulls immutable archetypes from curated ideas repository.
  * @param {string} eventType - The type of event.
  * @returns {PersonalizedIdea[]} Curated ideas across decor, culinary, entertainment, and favors.
  */
 export function generatePersonalizedIdeas(eventType: string): PersonalizedIdea[] {
-  const isWedding = eventType.toLowerCase().includes('wedding');
-  const isHackathon = eventType.toLowerCase().includes('hackathon');
-
-  if (isWedding) {
-    return [
-      {
-        id: 'idea-w1',
-        title: 'Botanical Floral Arch with Micro-Mist Scent Infusion',
-        category: 'Decor & Ambiance',
-        description: 'Living floral canopy suspended over the aisle featuring subtle jasmine and white amber micro-mist diffusion timed to the processional entrance.',
-        impactTag: 'High Visual Impact',
-        estimatedBudgetImpact: 'Moderate',
-        isFavorited: true,
-      },
-      {
-        id: 'idea-w2',
-        title: 'Bespoke Dual-Heritage Molecular Mocktail Bar',
-        category: 'Culinary & Mixology',
-        description: 'Interactive cocktail alchemy station offering customized drinks named after the couple’s milestone travel memories with edible gold leaf and dry ice presentation.',
-        impactTag: 'Signature Experience',
-        estimatedBudgetImpact: 'Low (Within F&B)',
-        isFavorited: false,
-      },
-      {
-        id: 'idea-w3',
-        title: 'Vintage Rotary Phone Audio Guestbook Station',
-        category: 'Experiential Moments',
-        description: '1940s French rotary telephone booth where guests leave unscripted voice notes, preserved into a pressed vinyl record album keepsake for the couple.',
-        impactTag: 'Emotional Resonance',
-        estimatedBudgetImpact: 'Low-Cost High-ROI',
-        isFavorited: true,
-      },
-      {
-        id: 'idea-w4',
-        title: 'Calligraphed Seed-Paper Placecards & Seedling Favors',
-        category: 'Attendee Keepsakes',
-        description: 'Hand-lettered plantable seed paper containing native wildflower seeds, paired with custom engraved ceramic mini-pots as sustainable celebratory favors.',
-        impactTag: 'Emotional Resonance',
-        estimatedBudgetImpact: 'Low-Cost High-ROI',
-        isFavorited: false,
-      },
-      {
-        id: 'idea-w5',
-        title: 'Acoustic String Quartet Bridging Pop & Classical Anthems',
-        category: 'Interactive Entertainment',
-        description: 'Classical string ensemble performing cinematic renditions of contemporary indie and film scores during arrival and cocktail transition periods.',
-        impactTag: 'High Visual Impact',
-        estimatedBudgetImpact: 'Moderate',
-        isFavorited: false,
-      },
-    ];
+  const lower = eventType.toLowerCase();
+  if (lower.includes('wedding')) {
+    return [...WEDDING_IDEAS];
   }
-
-  if (isHackathon) {
-    return [
-      {
-        id: 'idea-h1',
-        title: '2:00 AM Midnight Nitrogen Barista Sprint & Energy Lounge',
-        category: 'Culinary & Mixology',
-        description: 'Artisanal cold-brew and espresso bar featuring custom flavored syrups, high-protein bento bowls, and electro-electrolyte boosters to sustain night hacking.',
-        impactTag: 'Signature Experience',
-        estimatedBudgetImpact: 'Moderate',
-        isFavorited: true,
-      },
-      {
-        id: 'idea-h2',
-        title: 'Real-Time Cyberpunk Terminal Git Commit Mosaic Wall',
-        category: 'Experiential Moments',
-        description: 'Live projector visualizer mapping repo commits into dynamic pixel art towers, celebrating milestones whenever teams push passing test suites.',
-        impactTag: 'Viral & Social',
-        estimatedBudgetImpact: 'Low-Cost High-ROI',
-        isFavorited: true,
-      },
-      {
-        id: 'idea-h3',
-        title: 'Limited-Edition Hardware & Enamel Developer Badge Patches',
-        category: 'Attendee Keepsakes',
-        description: 'Tactile embroidered cyberpunk skill patches and PCB keychains unlocked when hackers demo working hardware or AI agent integrations.',
-        impactTag: 'High Visual Impact',
-        estimatedBudgetImpact: 'Low (Within Swag)',
-        isFavorited: false,
-      },
-      {
-        id: 'idea-h4',
-        title: 'Ergonomic Acoustic Lo-Fi Soundproof Breakout Domes',
-        category: 'Decor & Ambiance',
-        description: 'Quiet geometric sleep/brainstorm geodesic domes equipped with noise-dampening panels, beanbags, and binaural lo-fi audio feeds.',
-        impactTag: 'Signature Experience',
-        estimatedBudgetImpact: 'Moderate',
-        isFavorited: false,
-      },
-      {
-        id: 'idea-h5',
-        title: '60-Second Lightning Pitch Gong Show with Live Peer Voting',
-        category: 'Interactive Entertainment',
-        description: 'Fast-paced demo showcase where crowd decibel meters and live QR voting determine people’s choice finalist seeds before judge deliberation.',
-        impactTag: 'Viral & Social',
-        estimatedBudgetImpact: 'Low-Cost High-ROI',
-        isFavorited: false,
-      },
-    ];
+  if (lower.includes('hackathon')) {
+    return [...HACKATHON_IDEAS];
   }
-
-  /* Default / Birthday & Private Celebrations */
-  return [
-    {
-      id: 'idea-b1',
-      title: 'Neon Noir Immersion Room & Instant Holographic Prints',
-      category: 'Experiential Moments',
-      description: 'Futuristic mirrored infinity cube photo experience producing instant credit-card-sized holographic motion prints for attendees to take home.',
-      impactTag: 'Viral & Social',
-      estimatedBudgetImpact: 'Moderate',
-      isFavorited: true,
-    },
-    {
-      id: 'idea-b2',
-      title: 'Smoke & Bubble Molecular Mixology Masterclass Station',
-      category: 'Culinary & Mixology',
-      description: 'Interactive drink lab where guests pop edible citrus aroma vapor bubbles atop color-shifting butterfly pea flower signature cocktails.',
-      impactTag: 'Signature Experience',
-      estimatedBudgetImpact: 'Moderate',
-      isFavorited: false,
-    },
-    {
-      id: 'idea-b3',
-      title: 'Multi-Channel Silent Disco with Headphone LED Battle',
-      category: 'Interactive Entertainment',
-      description: '3 simultaneous DJs (House, Throwback Hits, Afrobeats) where headphones glow red, blue, or green to reveal which music channel is dominating the floor.',
-      impactTag: 'High Visual Impact',
-      estimatedBudgetImpact: 'Moderate',
-      isFavorited: true,
-    },
-    {
-      id: 'idea-b4',
-      title: 'Custom Screenprinted Canvas Tote Bags Crafted Live On-Site',
-      category: 'Attendee Keepsakes',
-      description: 'Live screenprinting station where guests select their favorite event motif and ink color to watch their personalized tote bag printed in 90 seconds.',
-      impactTag: 'Emotional Resonance',
-      estimatedBudgetImpact: 'Low-Cost High-ROI',
-      isFavorited: false,
-    },
-    {
-      id: 'idea-b5',
-      title: 'Starlight Ceiling Projection Mapping with Golden Sparkler Finale',
-      category: 'Decor & Ambiance',
-      description: 'Constellation sky projections synced to ambient deep house rhythms, culminating in indoor cold-spark fountain cascades during milestone toast.',
-      impactTag: 'High Visual Impact',
-      estimatedBudgetImpact: 'Moderate',
-      isFavorited: false,
-    },
-  ];
+  return [...DEFAULT_IDEAS];
 }
 
 /**
@@ -381,7 +240,12 @@ export function synthesizeFallbackPlan(input: EventInput): EventPlan {
     },
   };
 
-  const themeKey = isWedding ? 'wedding' : isHackathon ? 'hackathon' : 'default';
+  let themeKey: 'wedding' | 'hackathon' | 'default' = 'default';
+  if (isWedding) {
+    themeKey = 'wedding';
+  } else if (isHackathon) {
+    themeKey = 'hackathon';
+  }
   const theme = themeMap[themeKey];
 
   const formalInvitation = isWedding
